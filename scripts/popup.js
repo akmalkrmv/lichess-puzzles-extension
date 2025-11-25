@@ -1,4 +1,7 @@
 (async function () {
+  const scrollContainer = document.documentElement;
+  
+  let scrollTimeout;
   let activeTabUrl = await getActiveTabUrl();
 
   async function getActiveTabUrl() {
@@ -7,6 +10,27 @@
     const [tab] = await chrome.tabs.query({active: true, currentWindow: true});
     return tab?.url || '';
   }
+
+  // Save scroll position when user scrolls
+  function saveScrollPosition() {
+    const scrollPosition = scrollContainer.scrollTop;
+    chrome.storage?.local.set({popupScrollPosition: scrollPosition});
+  }
+
+  // Restore scroll position after rendering
+  function restoreScrollPosition() {
+    chrome.storage?.local.get(['popupScrollPosition'], (data) => {
+      if (data.popupScrollPosition !== undefined) {
+        scrollContainer.scrollTop = data.popupScrollPosition;
+      }
+    });
+  }
+
+  // Throttle scroll events to avoid excessive storage writes
+  document.addEventListener('scroll', () => {
+    clearTimeout(scrollTimeout);
+    scrollTimeout = setTimeout(saveScrollPosition, 300);
+  });
 
   // Handle link clicks by "hand", because extension cannot change active tab url directly
   document.addEventListener('click', (e) => {
@@ -119,6 +143,9 @@
 
     container.innerHTML = '';
     container.appendChild(fragment);
+
+    // Restore scroll position after rendering
+    restoreScrollPosition();
   }
 
   function updateUI() {
