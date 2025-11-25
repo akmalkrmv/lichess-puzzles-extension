@@ -2,7 +2,7 @@ const testData = {
   '3DO06': {
     reviewed: [],
     solved: [],
-    timestamp: 1764080009647,
+    timestamp: Date.now(), // Today
     unsolved: ['https://lichess.org/training/7EYpr'],
   },
   '47y0O': {
@@ -24,7 +24,7 @@ const testData = {
       'https://lichess.org/training/3weM4',
       'https://lichess.org/training/w1lHD',
     ],
-    timestamp: 1764080239471,
+    timestamp: Date.now() - 1000 * 60 * 60 * 2, // Today, 2 hours ago
     unsolved: ['https://lichess.org/training/EvgfC', 'https://lichess.org/training/asbLG', 'https://lichess.org/training/nIc07'],
   },
   '5fDS6': {
@@ -51,7 +51,7 @@ const testData = {
       'https://lichess.org/training/1q1Cr',
       'https://lichess.org/training/yoBhW',
     ],
-    timestamp: 1764064195595,
+    timestamp: Date.now() - 1000 * 60 * 60 * 24, // Yesterday
     unsolved: [],
   },
   '7pRHx': {
@@ -80,7 +80,7 @@ const testData = {
       'https://lichess.org/training/7WjYx',
       'https://lichess.org/training/T7ULg',
     ],
-    timestamp: 1764019650572,
+    timestamp: Date.now() - 1000 * 60 * 60 * 24 * 3, // 3 days ago
     unsolved: [],
   },
   D1msG: {
@@ -102,7 +102,7 @@ const testData = {
       'https://lichess.org/training/rAaNq',
       'https://lichess.org/training/NYZ9r',
     ],
-    timestamp: 1764012796939,
+    timestamp: Date.now() - 1000 * 60 * 60 * 24 * 5, // 5 days ago
     unsolved: [],
   },
   E87RN: {
@@ -123,7 +123,7 @@ const testData = {
       'https://lichess.org/training/tjWhO',
       'https://lichess.org/training/PeLSq',
     ],
-    timestamp: 1764081368292,
+    timestamp: Date.now() - 1000 * 60 * 60 * 12, // Today, 12 hours ago
     unsolved: ['https://lichess.org/training/v1o0F', 'https://lichess.org/training/EXuuZ'],
   },
   Ni6G1: {
@@ -152,7 +152,7 @@ const testData = {
       'https://lichess.org/training/ljtUh',
       'https://lichess.org/training/BMcwO',
     ],
-    timestamp: 1764014115332,
+    timestamp: Date.now() - 1000 * 60 * 60 * 24 * 7, // 1 week ago
     unsolved: [],
   },
   OPI3p: {
@@ -173,7 +173,7 @@ const testData = {
       'https://lichess.org/training/sW6Pv',
       'https://lichess.org/training/Hl2Vt',
     ],
-    timestamp: 1764082119609,
+    timestamp: Date.now() - 1000 * 60 * 60 * 24 * 10, // 10 days ago
     unsolved: [
       'https://lichess.org/training/CoSH4',
       'https://lichess.org/training/uU04d',
@@ -204,7 +204,7 @@ const testData = {
       'https://lichess.org/training/uAKsr',
       'https://lichess.org/training/jr2DX',
     ],
-    timestamp: 1764080481684,
+    timestamp: Date.now() - 1000 * 60 * 60 * 24, // Yesterday
     unsolved: [
       'https://lichess.org/training/MmeYE',
       'https://lichess.org/training/F3zzb',
@@ -235,7 +235,7 @@ const testData = {
       'https://lichess.org/training/z8ZZR',
       'https://lichess.org/training/rYiq3',
     ],
-    timestamp: 1764082499534,
+    timestamp: Date.now() - 1000 * 60 * 60 * 24 * 2, // 2 days ago
     unsolved: [
       'https://lichess.org/training/hnEGS',
       'https://lichess.org/training/k9JTE',
@@ -247,7 +247,7 @@ const testData = {
   T9USX: {
     reviewed: [],
     solved: [],
-    timestamp: 1764081654160,
+    timestamp: Date.now() - 1000 * 60 * 60 * 24 * 4, // 4 days ago
     unsolved: ['https://lichess.org/training/3MmaF'],
   },
   ZF3Lj: {
@@ -269,7 +269,7 @@ const testData = {
       'https://lichess.org/training/2PQPN',
       'https://lichess.org/training/tIzbA',
     ],
-    timestamp: 1764082346932,
+    timestamp: Date.now() - 1000 * 60 * 60 * 24 * 8, // 8 days ago
     unsolved: ['https://lichess.org/training/Werdb', 'https://lichess.org/training/Sf1u1', 'https://lichess.org/training/QAq3p', 'https://lichess.org/training/YZgrw'],
   },
   afX3w: {
@@ -291,7 +291,7 @@ const testData = {
       'https://lichess.org/training/ofjP4',
       'https://lichess.org/training/EJmtW',
     ],
-    timestamp: 1764081869788,
+    timestamp: Date.now() - 1000 * 60 * 60 * 24 * 6, // 6 days ago
     unsolved: [
       'https://lichess.org/training/whMnl',
       'https://lichess.org/training/vWgVj',
@@ -324,7 +324,7 @@ const testData = {
       'https://lichess.org/training/Cg7sI',
       'https://lichess.org/training/3bKcw',
     ],
-    timestamp: 1764064075479,
+    timestamp: Date.now() - 1000 * 60 * 60 * 24 * 9, // 9 days ago
     unsolved: ['https://lichess.org/training/jPZvx', 'https://lichess.org/training/kXuAl'],
   },
   lvvnj: {
@@ -341,7 +341,7 @@ const testData = {
       'https://lichess.org/training/femFc',
       'https://lichess.org/training/34TkD',
     ],
-    timestamp: 1764080360338,
+    timestamp: Date.now() - 1000 * 60 * 60 * 24 * 3, // 3 days ago
     unsolved: [
       'https://lichess.org/training/nrMxW',
       'https://lichess.org/training/Ti8HI',
@@ -374,7 +374,7 @@ const testData = {
       'https://lichess.org/training/8HLmF',
       'https://lichess.org/training/Uo55C',
     ],
-    timestamp: 1764080120428,
+    timestamp: Date.now() - 1000 * 60 * 60 * 24 * 2, // 2 days ago
     unsolved: [
       'https://lichess.org/training/oQkEd',
       'https://lichess.org/training/6Llgm',
@@ -402,7 +402,7 @@ const testData = {
       'https://lichess.org/training/zEvxw',
       'https://lichess.org/training/5EgRu',
     ],
-    timestamp: 1764012557293,
+    timestamp: Date.now() - 1000 * 60 * 60 * 24 * 14, // 2 weeks ago
     unsolved: [
       'https://lichess.org/training/dd3ph',
       'https://lichess.org/training/3dYvS',
@@ -428,7 +428,7 @@ const testData = {
       'https://lichess.org/training/XuAFq',
       'https://lichess.org/training/oesp5',
     ],
-    timestamp: 1764081032117,
+    timestamp: Date.now() - 1000 * 60 * 60 * 4, // Today, 4 hours ago
     unsolved: [
       'https://lichess.org/training/1xCye',
       'https://lichess.org/training/1Lmt8',
@@ -461,7 +461,7 @@ const testData = {
       'https://lichess.org/training/yiHhU',
       'https://lichess.org/training/qriR5',
     ],
-    timestamp: 1764021986355,
+    timestamp: Date.now() - 1000 * 60 * 60 * 24 * 11, // 11 days ago
     unsolved: ['https://lichess.org/training/mscXs', 'https://lichess.org/training/HA6CQ'],
   },
 };
