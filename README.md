@@ -117,8 +117,13 @@ The popup displays:
 
 ## Theme Screenshots
 
-### Dark Theme
-![Dark Theme Screenshot](screenshots/dark-theme.png)
-
-### Light Theme
-![Light Theme Screenshot](screenshots/light-theme.png)
+<div style="display: flex; gap: 20px; justify-content: center;">
+  <div style="text-align: center; flex: 1;">
+    <h3>Dark Theme</h3>
+    <img src="screenshots/dark-theme.png" alt="Dark Theme Screenshot" style="max-width: 100%; border-radius: 8px;">
+  </div>
+  <div style="text-align: center; flex: 1;">
+    <h3>Light Theme</h3>
+    <img src="screenshots/light-theme.png" alt="Light Theme Screenshot" style="max-width: 100%; border-radius: 8px;">
+  </div>
+</div>
