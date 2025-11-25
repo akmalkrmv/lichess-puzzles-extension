@@ -17,19 +17,6 @@ This extension was inspired to help [ElyneLee](https://www.twitch.tv/elynelee) k
 - 🎮 **Multi-Mode Support** - Works with both Puzzle Racer and Puzzle Training modes
 - 🌓 **Light & Dark Theme Support** - Automatically adapts to your system theme preference
 
-## Popup UI
-
-The extension provides a clean, organized interface for managing collected puzzles:
-
-- **Dark Theme** - Default theme with a sleek dark interface
-- **Light Theme** - Bright, eye-friendly light theme
-
-The popup displays:
-- All collected puzzle races sorted by timestamp (latest first)
-- Puzzle status badges (unsolved, reviewed, solved)
-- Quick links to navigate to specific puzzles
-- Current tab indicator to show which puzzle you're viewing
-
 ## Supported Modes
 
 - **Puzzle Racer** (`lichess.org/racer/*`)
@@ -114,6 +101,19 @@ This project is provided as-is for personal use.
 ## Contributing
 
 Feel free to submit issues or suggestions for improvements!
+
+## Popup UI
+
+The extension provides a clean, organized interface for managing collected puzzles:
+
+- **Dark Theme** - Default theme with a sleek dark interface
+- **Light Theme** - Bright, eye-friendly light theme
+
+The popup displays:
+- All collected puzzle races sorted by timestamp (latest first)
+- Puzzle status badges (unsolved, reviewed, solved)
+- Quick links to navigate to specific puzzles
+- Current tab indicator to show which puzzle you're viewing
 
 ## Theme Screenshots
 
