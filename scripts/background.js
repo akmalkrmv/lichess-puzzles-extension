@@ -58,6 +58,8 @@
           race.reviewed.push(puzzleUrl); // add to reviewed
 
           chrome.storage.local.set({races});
+
+          return; // IMPORTANT — prevents overwriting
         }
       }
     });
