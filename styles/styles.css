@@ -10,8 +10,9 @@
 
 body {
   width: 460px;
+  margin: 0 auto;
   padding: 0 2rem 2rem;
-  font-size: 1.1rem;
+  font-size: 1rem;
   background-color: var(--bg);
   position: relative;
   overflow-y: scroll;
@@ -68,6 +69,10 @@ summary::-webkit-details-marker {
   font-size: 1rem;
   font-weight: bold;
   color: white;
+
+  min-width: 2rem;
+  display: inline-block;
+  text-align: center;
 }
 
 .unsolved-badge {

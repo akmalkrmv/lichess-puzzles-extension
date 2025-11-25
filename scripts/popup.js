@@ -59,35 +59,35 @@
   function getRelativeDateLabel(timestamp) {
     const raceDate = new Date(timestamp);
     const today = new Date();
-    
+
     // Reset times to compare only dates
     raceDate.setHours(0, 0, 0, 0);
     today.setHours(0, 0, 0, 0);
-    
+
     const diffTime = today - raceDate;
     const diffDays = diffTime / (1000 * 60 * 60 * 24);
-    
+
     if (diffDays === 0) return 'Today';
     if (diffDays === 1) return 'Yesterday';
     if (diffDays < 7) return `${Math.floor(diffDays)} days ago`;
     if (diffDays < 30) return `${Math.floor(diffDays / 7)} weeks ago`;
-    
+
     return raceDate.toLocaleDateString();
   }
 
   function groupRacesByDate(races, raceIds) {
     const grouped = {};
-    
+
     raceIds.forEach((id) => {
       const race = races[id];
       const label = getRelativeDateLabel(race.timestamp);
-      
+
       if (!grouped[label]) {
         grouped[label] = [];
       }
       grouped[label].push(id);
     });
-    
+
     return grouped;
   }
 
@@ -117,32 +117,32 @@
     const groupedRaces = groupRacesByDate(races, raceIds);
     const dateLabels = ['Today', 'Yesterday'];
     const otherLabels = Object.keys(groupedRaces)
-      .filter(label => !dateLabels.includes(label))
+      .filter((label) => !dateLabels.includes(label))
       .sort((a, b) => {
         // Try to parse as numeric days/weeks
         const aMatch = a.match(/(\d+)\s+days?\s+ago/);
         const bMatch = b.match(/(\d+)\s+days?\s+ago/);
-        
+
         if (aMatch && bMatch) {
           return parseInt(aMatch[1]) - parseInt(bMatch[1]);
         }
-        
+
         // Fallback to string comparison
         return a.localeCompare(b);
       });
-    
-    const sortedLabels = [...dateLabels.filter(l => groupedRaces[l]), ...otherLabels];
+
+    const sortedLabels = [...dateLabels.filter((l) => groupedRaces[l]), ...otherLabels];
 
     // Render each date group
     sortedLabels.forEach((dateLabel) => {
       const groupRaceIds = groupedRaces[dateLabel];
-      
+
       // Calculate group statistics
       let totalSolved = 0;
       let totalUnsolved = 0;
       let totalReviewed = 0;
       let highScore = 0;
-      
+
       groupRaceIds.forEach((id) => {
         const race = races[id];
         totalSolved += race.solved?.length || 0;
@@ -152,25 +152,27 @@
           highScore = race.score;
         }
       });
-      
+
       // Create date group heading with statistics
       const dateHeading = document.createElement('h3');
       dateHeading.classList.add('date-group-header');
-      
+
       const labelSpan = document.createElement('span');
       labelSpan.classList.add('date-group-label');
-      labelSpan.textContent = `${dateLabel} (${groupRaceIds.length} races)`;
-      
+      labelSpan.textContent = `${dateLabel} (${groupRaceIds.length})`;
+
       const statsSpan = document.createElement('span');
       statsSpan.classList.add('date-group-stats');
       const statsText = [
-        `${totalSolved} solved`,
-        `${totalUnsolved} unsolved`,
-        `${totalReviewed} reviewed`,
-        highScore ? `High: ${highScore}` : ''
-      ].filter(Boolean).join(' • ');
-      statsSpan.textContent = statsText;
-      
+        highScore ? `Highest score: <b>${highScore}</b>` : '',
+        `<span class="badge solved-badge">${totalSolved}</span>`,
+        `<span class="badge unsolved-badge">${totalUnsolved}</span>`,
+        `<span class="badge reviewed-badge">${totalReviewed}</span>`,
+      ]
+        .filter(Boolean)
+        .join(' ');
+      statsSpan.innerHTML = statsText;
+
       dateHeading.appendChild(labelSpan);
       dateHeading.appendChild(statsSpan);
       fragment.appendChild(dateHeading);
@@ -188,9 +190,9 @@
           details.open = true;
         }
 
-        const scoreText = race.score !== undefined ? `Score: ${race.score}` : '';
-        const rankText = race.rank ? `Rank: ${race.rank}/${race.totalPlayers || '?'}` : '';
-        const statsText = [scoreText, rankText].filter(Boolean).join(' • ');
+        const scoreText = race.score !== undefined ? `Score: <b>${race.score}</b>` : '';
+        const rankText = race.rank ? `Rank: <b>${race.rank}/${race.totalPlayers || '?'}</b>` : '';
+        const statsText = [scoreText, rankText].filter(Boolean).join(' ');
 
         details.innerHTML = `
           <summary>

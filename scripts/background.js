@@ -30,6 +30,9 @@
 
       races[message.raceId] = {
         timestamp: message.timestamp,
+        score: message.score || 0,
+        rank: message.rank || 0,
+        totalPlayers: message.totalPlayers || 0,
         solved: message.solved || [],
         unsolved: message.unsolved || [],
         reviewed: message.reviewed || [],
