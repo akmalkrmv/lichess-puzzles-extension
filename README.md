@@ -6,6 +6,8 @@ A Chrome extension that automates collecting unsolved puzzles from Lichess.
 
 The **Lichess Puzzle Collector** extension helps you efficiently track and manage puzzle races and training sessions from Lichess. It automatically collects unsolved puzzle links and provides an organized interface to manage and revisit them.
 
+This extension was inspired to help [ElyneLee](https://www.twitch.tv/elynelee) keep track of unsolved puzzles from previous puzzle racer runs, allowing for easy review and solving of those puzzles after the races.
+
 ## Features
 
 - 🎯 **Automatic Puzzle Collection** - Collects unsolved puzzles from Lichess puzzle modes
