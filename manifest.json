@@ -1,0 +1,33 @@
+{
+  "manifest_version": 3,
+  "name": "Lichess Puzzle Collector",
+  "description": "Automates collecting unsolved puzzles on Lichess",
+  "version": "1.0",
+  "permissions": ["tabs", "activeTab", "storage"],
+  "host_permissions": ["https://lichess.org/*"],
+  "background": {
+    "service_worker": "scripts/background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://lichess.org/*", "http://127.0.0.1:5500/*"],
+      "js": ["scripts/content_racer.js"]
+    },
+    {
+      "matches": ["https://lichess.org/racer/*"],
+      "js": ["scripts/content_racer.js"]
+    },
+    {
+      "matches": ["https://lichess.org/training/*"],
+      "js": ["scripts/content_training.js"]
+    }
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icons/16.png",
+      "48": "icons/48.png",
+      "128": "icons/128.png"
+    }
+  }
+}
