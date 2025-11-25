@@ -137,15 +137,42 @@
     sortedLabels.forEach((dateLabel) => {
       const groupRaceIds = groupedRaces[dateLabel];
       
-      // Create date group heading
+      // Calculate group statistics
+      let totalSolved = 0;
+      let totalUnsolved = 0;
+      let totalReviewed = 0;
+      let highScore = 0;
+      
+      groupRaceIds.forEach((id) => {
+        const race = races[id];
+        totalSolved += race.solved?.length || 0;
+        totalUnsolved += race.unsolved?.length || 0;
+        totalReviewed += race.reviewed?.length || 0;
+        if (race.score && race.score > highScore) {
+          highScore = race.score;
+        }
+      });
+      
+      // Create date group heading with statistics
       const dateHeading = document.createElement('h3');
-      dateHeading.style.marginTop = '1.5rem';
-      dateHeading.style.marginBottom = '0.8rem';
-      dateHeading.style.color = 'var(--text-muted)';
-      dateHeading.style.fontSize = '0.95rem';
-      dateHeading.style.textTransform = 'uppercase';
-      dateHeading.style.letterSpacing = '0.5px';
-      dateHeading.textContent = dateLabel;
+      dateHeading.classList.add('date-group-header');
+      
+      const labelSpan = document.createElement('span');
+      labelSpan.classList.add('date-group-label');
+      labelSpan.textContent = `${dateLabel} (${groupRaceIds.length} races)`;
+      
+      const statsSpan = document.createElement('span');
+      statsSpan.classList.add('date-group-stats');
+      const statsText = [
+        `${totalSolved} solved`,
+        `${totalUnsolved} unsolved`,
+        `${totalReviewed} reviewed`,
+        highScore ? `High: ${highScore}` : ''
+      ].filter(Boolean).join(' • ');
+      statsSpan.textContent = statsText;
+      
+      dateHeading.appendChild(labelSpan);
+      dateHeading.appendChild(statsSpan);
       fragment.appendChild(dateHeading);
 
       // Render races for this date
@@ -161,12 +188,17 @@
           details.open = true;
         }
 
+        const scoreText = race.score !== undefined ? `Score: ${race.score}` : '';
+        const rankText = race.rank ? `Rank: ${race.rank}/${race.totalPlayers || '?'}` : '';
+        const statsText = [scoreText, rankText].filter(Boolean).join(' • ');
+
         details.innerHTML = `
           <summary>
             <div class="summary-row">
               <div class="summary-row-title">
                   <span>Race: <a target="_blank" href="https://lichess.org/racer/${id}">#${id}</a></span>
                   <span class="summary-row-time">${dateTime}</span>
+                  ${statsText ? `<span class="summary-row-stats">${statsText}</span>` : ''}
               </div>
               <span class="badges">
                 <span class="badge solved-badge">${race.solved?.length || 0}</span>
