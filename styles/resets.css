@@ -9,7 +9,7 @@
   --theme-color-s: 30%;
 
   /* ===== Theme core ===== */
-  --theme: hsl(221 30% 53%); /* base hue and saturation, mid lightness */
+  --theme: hsl(221 20% 53%); /* base hue and saturation, mid lightness */
 
   /* ===== Derived colors (dark mode default) ===== */
   --bg-dark:     hsl(from var(--theme) h s 0%);

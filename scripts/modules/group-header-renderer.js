@@ -3,7 +3,7 @@
  */
 
 const GroupHeaderRenderer = (() => {
-  function createHeader(dateLabel, groupRaceIds, stats) {
+  function createHeader(dateLabel, groupRaceIds, stats, showBadges = true) {
     const heading = document.createElement('h3');
     heading.classList.add('date-group-header');
 
@@ -15,9 +15,9 @@ const GroupHeaderRenderer = (() => {
     statsSpan.classList.add('date-group-stats');
     const statsText = [
       stats.highScore ? `Highest score: <b>${stats.highScore}</b>` : '',
-      `<span class="badge solved-badge">${stats.totalSolved}</span>`,
-      `<span class="badge unsolved-badge">${stats.totalUnsolved}</span>`,
-      `<span class="badge reviewed-badge">${stats.totalReviewed}</span>`,
+      showBadges ? `<span class="badge solved-badge">${stats.totalSolved}</span>` : '',
+      showBadges ? `<span class="badge unsolved-badge">${stats.totalUnsolved}</span>` : '',
+      showBadges ? `<span class="badge reviewed-badge">${stats.totalReviewed}</span>` : '',
     ]
       .filter(Boolean)
       .join(' ');

@@ -3,9 +3,12 @@
  */
 
 const UIRenderer = (() => {
-  function render(data) {
+  async function render(data) {
     const container = document.getElementById('list');
+    if (!container) return;
+
     const fragment = document.createDocumentFragment();
+    const settings = await SettingsManager.getSettings();
 
     const races = data.races || {};
     const openRaces = data.openRaces || {};
@@ -24,11 +27,11 @@ const UIRenderer = (() => {
       const groupRaceIds = groupedRaces[dateLabel];
       const stats = RaceOrganizer.calculateGroupStats(races, groupRaceIds);
 
-      fragment.appendChild(GroupHeaderRenderer.createHeader(dateLabel, groupRaceIds, stats));
+      fragment.appendChild(GroupHeaderRenderer.createHeader(dateLabel, groupRaceIds, stats, settings.showBadges));
 
       groupRaceIds.forEach((id) => {
         const race = races[id];
-        fragment.appendChild(RaceDetailRenderer.createRaceElement(id, race, openRaces));
+        fragment.appendChild(RaceDetailRenderer.createRaceElement(id, race, openRaces, settings));
       });
     });
 

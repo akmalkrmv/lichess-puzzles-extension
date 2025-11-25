@@ -5,13 +5,45 @@
     <link rel="stylesheet" href="styles/styles.css" />
   </head>
   <body>
-    <h2>Stored Puzzle Races</h2>
-    <div id="list"></div>
+    <div class="popup-container">
+      <header class="popup-header">
+        <h1>Puzzle Racer Tracker</h1>
+      </header>
+
+      <nav class="tabs-nav">
+        <button class="tab-btn" data-tab="history">📋 History</button>
+        <button class="tab-btn" data-tab="export">📥 Export</button>
+        <button class="tab-btn" data-tab="import">📤 Import</button>
+        <button class="tab-btn" data-tab="settings">⚙️ Settings</button>
+      </nav>
+
+      <main class="tabs-content">
+        <!-- History Tab -->
+        <section id="history-content" data-tab-content="history">
+          <div id="list"></div>
+        </section>
+
+        <!-- Export Tab -->
+        <section id="export-content" data-tab-content="export">
+          <div class="loading">Loading...</div>
+        </section>
+
+        <!-- Import Tab -->
+        <section id="import-content" data-tab-content="import">
+          <div class="loading">Loading...</div>
+        </section>
+
+        <!-- Settings Tab -->
+        <section id="settings-content" data-tab-content="settings">
+          <div class="loading">Loading...</div>
+        </section>
+      </main>
+    </div>
 
     <!-- Test data -->
     <script src="scripts/test-data.js"></script>
 
-    <!-- Modules -->
+    <!-- Core Modules -->
     <script src="scripts/modules/scroll-manager.js"></script>
     <script src="scripts/modules/link-handler.js"></script>
     <script src="scripts/modules/date-formatter.js"></script>
@@ -20,6 +52,12 @@
     <script src="scripts/modules/group-header-renderer.js"></script>
     <script src="scripts/modules/race-detail-renderer.js"></script>
     <script src="scripts/modules/ui-renderer.js"></script>
+
+    <!-- Tab & Settings Modules -->
+    <script src="scripts/modules/tab-manager.js"></script>
+    <script src="scripts/modules/settings-manager.js"></script>
+    <script src="scripts/modules/export-manager.js"></script>
+    <script src="scripts/modules/import-manager.js"></script>
 
     <!-- Main popup controller -->
     <script src="scripts/popup.js"></script>

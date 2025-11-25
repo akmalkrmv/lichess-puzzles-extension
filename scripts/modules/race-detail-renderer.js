@@ -3,7 +3,10 @@
  */
 
 const RaceDetailRenderer = (() => {
-  function createRaceElement(id, race, openRaces) {
+  function createRaceElement(id, race, openRaces, settings = {}) {
+    const showSolvedPuzzles = settings.showSolvedPuzzles !== false;
+    const showBadges = settings.showBadges !== false;
+
     const details = document.createElement('details');
     details.dataset.raceId = id;
 
@@ -25,9 +28,9 @@ const RaceDetailRenderer = (() => {
               ${statsText ? `<span class="summary-row-stats">${statsText}</span>` : ''}
           </div>
           <span class="badges">
-            <span class="badge solved-badge">${race.solved?.length || 0}</span>
+            ${showBadges ? `<span class="badge solved-badge">${race.solved?.length || 0}</span>` : ''}
             <span class="badge unsolved-badge">${race.unsolved?.length || 0}</span>
-            <span class="badge reviewed-badge">${race.reviewed?.length || 0}</span>
+            ${showBadges ? `<span class="badge reviewed-badge">${race.reviewed?.length || 0}</span>` : ''}
           </span>
         </div>
       </summary>
@@ -38,6 +41,7 @@ const RaceDetailRenderer = (() => {
           ${LinkRenderer.renderLinks(race.unsolved, 'unsolved')}
         </div>
 
+        ${showSolvedPuzzles ? `
         <div>
           <div><strong>Reviewed</strong></div>
           ${LinkRenderer.renderLinks(race.reviewed, 'reviewed')}
@@ -47,6 +51,7 @@ const RaceDetailRenderer = (() => {
           <div><strong>Solved</strong></div>
           ${LinkRenderer.renderLinks(race.solved, 'solved')}
         </div>
+        ` : ''}
       </div>
     `;
 
