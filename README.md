@@ -47,28 +47,6 @@ This extension was inspired to help [ElyneLee](https://www.twitch.tv/elynelee) k
    - Click any puzzle link in the popup to navigate to it
    - Links are opened in the active tab for seamless navigation
 
-## File Structure
-
-```
-lichess-puzzles-extension/
-├── manifest.json              # Extension manifest (v3)
-├── popup.html                 # Popup UI
-├── README.md                  # This file
-├── icons/
-│   ├── 16.png                # Toolbar icon (16x16)
-│   ├── 48.png                # Toolbar icon (48x48)
-│   └── 128.png               # Toolbar icon (128x128)
-├── scripts/
-│   ├── background.js          # Background service worker
-│   ├── content_racer.js       # Content script for Racer mode
-│   ├── content_training.js    # Content script for Training mode
-│   ├── popup.js              # Popup UI controller
-│   └── test-data.js          # Test data for development
-└── styles/
-    ├── resets.css            # CSS reset styles
-    └── styles.css            # Main stylesheet
-```
-
 ## How It Works
 
 1. **Content Scripts** - Monitor puzzle activity on Lichess pages
@@ -85,7 +63,7 @@ lichess-puzzles-extension/
 
 ## Browser Support
 
-- Chrome/Chromium-based browsers with Manifest V3 support
+- Chrome/Chromium-based browsers with Manifest V3 support (including Edge browser)
 
 ## Development
 
