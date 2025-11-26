@@ -77,7 +77,7 @@
   }
 
   /* ===== Forced light theme ===== */
-  &[data-theme='light'] {
+  &[data-theme='theme-light'] {
     --bg-dark:     hsl(from var(--theme) h s 90%);
     --bg:          hsl(from var(--theme) h s 95%);
     --bg-light:    hsl(from var(--theme) h s 100%);
@@ -102,6 +102,35 @@
     --shadow-hard:
         0 2px 2px hsl(from var(--theme) h s 0% / 0.15),
         0 4px 4px hsl(from var(--theme) h s 0% / 0.3);
+  }
+
+  /* ===== Forced dark theme ===== */
+  &[data-theme='theme-dark'] {
+    --bg-dark:     hsl(from var(--theme) h s 0%);
+    --bg:          hsl(from var(--theme) h s 5%);
+    --bg-light:    hsl(from var(--theme) h s 10%);
+    --bg-header:   hsl(from var(--theme) h 90% 10%);
+
+    --text:        hsl(from var(--theme) h s 95%);
+    --text-muted:  hsl(from var(--theme) h s 70%);
+
+    --border:      hsl(from var(--theme) h s 30%);
+    --highlight:   hsl(from var(--theme) h s 60%);
+    --border-card: solid 1px var(--border);
+
+    /* ===== Visual effects ===== */
+    --gradient:        linear-gradient(0deg, var(--bg-dark) 85%, var(--bg-light));
+    --gradient-hover:  linear-gradient(0deg, var(--bg-dark),     var(--bg-light));
+
+    --shadow-soft:
+        0 2px 2px hsl(from var(--theme) h s 100% / 0.03),
+        0 4px 4px hsl(from var(--theme) h s 100% / 0.07);
+    --shadow:
+        0 2px 2px hsl(from var(--theme) h s 100% / 0.07),
+        0 4px 4px hsl(from var(--theme) h s 100% / 0.15);
+    --shadow-hard:
+        0 2px 2px hsl(from var(--theme) h s 100% / 0.15),
+        0 4px 4px hsl(from var(--theme) h s 100% / 0.3);
   }
 }
 

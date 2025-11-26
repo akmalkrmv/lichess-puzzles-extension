@@ -40,7 +40,7 @@ const SettingsManager = (() => {
     }
     
     // Also set data attribute for CSS selectors
-    html.dataset.theme = settings.theme;
+    html.dataset.theme = `theme-${settings.theme}`;
 
     // Apply visibility settings
     document.documentElement.dataset.showSolvedPuzzles = settings.showSolvedPuzzles;
