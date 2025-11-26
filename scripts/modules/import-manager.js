@@ -62,7 +62,7 @@ const ImportManager = (() => {
             throw new Error('Invalid file format');
           }
 
-          chrome.storage?.local.get(['races'], (data) => {
+          StorageAdapter.get(['races']).then((data) => {
             const existing = data.races || {};
             let merged = {...existing};
             let newCount = 0;
@@ -74,7 +74,7 @@ const ImportManager = (() => {
               }
             });
 
-            chrome.storage?.local.set({races: merged}, () => {
+            StorageAdapter.set({races: merged}).then(() => {
               statusDiv.style.display = 'block';
               messageDiv.textContent = `✅ Successfully imported ${newCount} new race(s)!`;
               messageDiv.className = 'success';

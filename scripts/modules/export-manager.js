@@ -15,12 +15,19 @@ const ExportManager = (() => {
     const offset = dateRanges[range]?.offset;
     if (offset === undefined) return null;
 
-    const now = Date.now();
-    const cutoff = now - offset * 24 * 60 * 60 * 1000;
+    // Create today at midnight
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    // Calculate cutoff date at midnight
+    const cutoffDate = new Date(today);
+    cutoffDate.setDate(cutoffDate.getDate() - offset);
 
     return (timestamp) => {
       if (offset === Infinity) return true;
-      return timestamp >= cutoff;
+      const raceDate = new Date(timestamp);
+      raceDate.setHours(0, 0, 0, 0);
+      return raceDate >= cutoffDate;
     };
   }
 
@@ -79,15 +86,21 @@ const ExportManager = (() => {
   }
 
   function downloadAsFile(content, filename) {
-    const blob = new Blob([content], {type: 'text/plain'});
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = filename;
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url);
+    // const blob = new Blob([content], {type: 'text/plain'});
+    // const url = URL.createObjectURL(blob);
+    // const a = document.createElement('a');
+    // a.href = url;
+    // a.download = filename;
+    // document.body.appendChild(a);
+    // a.click();
+    // document.body.removeChild(a);
+    // URL.revokeObjectURL(url);
+
+    chrome.downloads.download({
+      url: URL.createObjectURL(new Blob([content], {type: 'text/plain'})),
+      filename,
+      saveAs: true,
+    });
   }
 
   async function renderExport() {
@@ -101,9 +114,9 @@ const ExportManager = (() => {
         <div class="export-group">
           <label>Select Date Range</label>
           <div class="button-group">
-            ${Object.entries(dateRanges).map(([key, {label}]) => 
-              `<button class="btn btn-sm" data-range="${key}">${label}</button>`
-            ).join('')}
+            ${Object.entries(dateRanges)
+              .map(([key, {label}]) => `<button class="btn btn-sm" data-range="${key}">${label}</button>`)
+              .join('')}
           </div>
         </div>
 
@@ -139,7 +152,7 @@ const ExportManager = (() => {
     let cachedStats = null;
 
     const updatePreview = () => {
-      chrome.storage?.local.get(['races'], (data) => {
+      StorageAdapter.get(['races']).then((data) => {
         const races = data.races || {};
         cachedPuzzles = filterUnsolvedPuzzles(races, selectedRange);
         cachedStats = calculateStatistics(races, selectedRange);
@@ -171,7 +184,7 @@ const ExportManager = (() => {
 
     // Export button
     document.getElementById('export-btn')?.addEventListener('click', () => {
-      chrome.storage?.local.get(['races'], (data) => {
+      StorageAdapter.get(['races']).then((data) => {
         const races = data.races || {};
         const puzzles = filterUnsolvedPuzzles(races, selectedRange);
         const stats = calculateStatistics(races, selectedRange);
@@ -184,7 +197,7 @@ const ExportManager = (() => {
 
     // Copy button
     document.getElementById('copy-btn')?.addEventListener('click', () => {
-      chrome.storage?.local.get(['races'], (data) => {
+      StorageAdapter.get(['races']).then((data) => {
         const races = data.races || {};
         const puzzles = filterUnsolvedPuzzles(races, selectedRange);
         const stats = calculateStatistics(races, selectedRange);

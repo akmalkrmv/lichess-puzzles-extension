@@ -18,58 +18,53 @@ async function initializeApp() {
   LinkHandler.setup();
   ScrollManager.setupThrottledListener();
 
-  // Initialize tab manager
-  TabManager.initialize();
+  // Initialize tab manager and wait for it to complete
+  await TabManager.initialize();
 
-  // Render content for current tab and set up tab change listeners
-  renderCurrentTab();
+  // Setup tab change listeners (must be after TabManager.initialize)
   setupTabChangeListener();
 
-  updateUI();
+  // Render content for current tab
+  await renderCurrentTab();
 }
 
 function setupTabChangeListener() {
   // Listen for tab changes and re-render
-  const origSetCurrentTab = TabManager.setCurrentTab;
-  TabManager.setCurrentTab = function (tabName) {
-    origSetCurrentTab.call(this, tabName);
-    renderCurrentTab();
-  };
+  document.querySelectorAll('[data-tab]').forEach((btn) => {
+    btn.addEventListener('click', async () => {
+      const tabName = btn.dataset.tab;
+      TabManager.setCurrentTab(tabName);
+      // Wait for render to complete after tab becomes visible
+      await renderCurrentTab();
+    });
+  });
 }
 
-function renderCurrentTab() {
+async function renderCurrentTab() {
   const currentTab = TabManager.getCurrentTab();
 
   switch (currentTab) {
     case 'history':
-      updateUI();
+      await updateUI();
       break;
     case 'export':
-      ExportManager.renderExport();
+      await ExportManager.renderExport();
       break;
     case 'import':
-      ImportManager.renderImport();
+      await ImportManager.renderImport();
       break;
     case 'settings':
-      SettingsManager.renderSettings();
+      await SettingsManager.renderSettings();
       break;
   }
 }
 
-function updateUI() {
+async function updateUI() {
   // Only update history tab if it's active
   if (TabManager.getCurrentTab() !== 'history') return;
 
-  if (chrome.storage?.local) {
-    chrome.storage.local.get(['races', 'openRaces'], (data) => UIRenderer.render(data));
-    return;
-  }
-
-  if (testData) {
-    UIRenderer.render({races: testData, openRaces: {}});
-    return;
-  }
+  const data = await StorageAdapter.get(['races', 'openRaces']);
+  UIRenderer.render(data);
 }
 
 initializeApp();
-

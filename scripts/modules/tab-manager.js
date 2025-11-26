@@ -18,7 +18,7 @@ const TabManager = (() => {
   function setCurrentTab(tabName) {
     if (!tabs[tabName]) return;
     currentTab = tabName;
-    chrome.storage?.local.set({currentTab: tabName});
+    StorageAdapter.set({currentTab: tabName});
     updateTabUI();
   }
 
@@ -42,21 +42,18 @@ const TabManager = (() => {
   }
 
   function setupTabListeners() {
-    document.querySelectorAll('[data-tab]').forEach((btn) => {
-      btn.addEventListener('click', () => {
-        const tab = btn.dataset.tab;
-        setCurrentTab(tab);
-      });
-    });
+    // Tab listeners are now set up in popup.js to properly handle async rendering
   }
 
   function initialize() {
-    chrome.storage?.local.get(['currentTab'], (data) => {
-      if (data.currentTab && tabs[data.currentTab]) {
-        currentTab = data.currentTab;
-      }
-      setupTabListeners();
-      updateTabUI();
+    return new Promise((resolve) => {
+      StorageAdapter.get(['currentTab']).then((data) => {
+        if (data.currentTab && tabs[data.currentTab]) {
+          currentTab = data.currentTab;
+        }
+        updateTabUI();
+        resolve();
+      });
     });
   }
 

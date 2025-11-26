@@ -10,22 +10,18 @@ const SettingsManager = (() => {
   };
 
   function getSettings() {
-    return new Promise((resolve) => {
-      chrome.storage?.local.get(['settings'], (data) => {
-        resolve(data.settings || defaults);
-      });
+    return StorageAdapter.get(['settings']).then((data) => {
+      return data.settings || defaults;
     });
   }
 
   function saveSetting(key, value) {
-    return new Promise((resolve) => {
-      chrome.storage?.local.get(['settings'], (data) => {
-        const settings = data.settings || defaults;
-        settings[key] = value;
-        chrome.storage?.local.set({settings}, () => {
-          applySettings(settings);
-          resolve(settings);
-        });
+    return StorageAdapter.get(['settings']).then((data) => {
+      const settings = data.settings || defaults;
+      settings[key] = value;
+      return StorageAdapter.set({settings}).then(() => {
+        applySettings(settings);
+        return settings;
       });
     });
   }
@@ -33,6 +29,8 @@ const SettingsManager = (() => {
   function applySettings(settings) {
     // Apply theme
     const html = document.documentElement;
+    
+    // Set colorScheme property
     if (settings.theme === 'light') {
       html.style.colorScheme = 'light';
     } else if (settings.theme === 'dark') {
@@ -40,6 +38,9 @@ const SettingsManager = (() => {
     } else {
       html.style.colorScheme = '';
     }
+    
+    // Also set data attribute for CSS selectors
+    html.dataset.theme = settings.theme;
 
     // Apply visibility settings
     document.documentElement.dataset.showSolvedPuzzles = settings.showSolvedPuzzles;
@@ -107,6 +108,10 @@ const SettingsManager = (() => {
     // Theme radio buttons
     document.querySelectorAll('input[name="theme"]').forEach((radio) => {
       radio.addEventListener('change', (e) => {
+        // Apply theme immediately for instant visual feedback
+        const newSettings = {...settings, theme: e.target.value};
+        applySettings(newSettings);
+        // Then save to storage
         saveSetting('theme', e.target.value);
       });
     });
@@ -134,7 +139,7 @@ const SettingsManager = (() => {
     if (clearButton) {
       clearButton.addEventListener('click', () => {
         if (confirm('Are you sure? This will delete all puzzle data.')) {
-          chrome.storage?.local.set({races: {}, openRaces: {}}, () => {
+          StorageAdapter.set({races: {}, openRaces: {}}).then(() => {
             alert('All data cleared!');
             updateUI();
           });
