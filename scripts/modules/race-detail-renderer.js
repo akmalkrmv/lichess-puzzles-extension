@@ -30,7 +30,7 @@ const RaceDetailRenderer = (() => {
           <span class="badges">
             ${showBadges ? `<span class="badge solved-badge">${race.solved?.length || 0}</span>` : ''}
             <span class="badge unsolved-badge">${race.unsolved?.length || 0}</span>
-            ${showBadges ? `<span class="badge reviewed-badge">${race.reviewed?.length || 0}</span>` : ''}
+            <span class="badge reviewed-badge">${race.reviewed?.length || 0}</span>
           </span>
         </div>
       </summary>
@@ -41,12 +41,12 @@ const RaceDetailRenderer = (() => {
           ${LinkRenderer.renderLinks(race.unsolved, 'unsolved')}
         </div>
 
-        ${showSolvedPuzzles ? `
         <div>
           <div><strong>Reviewed</strong></div>
           ${LinkRenderer.renderLinks(race.reviewed, 'reviewed')}
         </div>
 
+        ${showSolvedPuzzles ? `
         <div>
           <div><strong>Solved</strong></div>
           ${LinkRenderer.renderLinks(race.solved, 'solved')}

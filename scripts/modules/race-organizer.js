@@ -24,18 +24,59 @@ const RaceOrganizer = (() => {
     let totalUnsolved = 0;
     let totalReviewed = 0;
     let highScore = 0;
+    let highRank = Infinity;
+    let totalScore = 0; // For average score
+    let totalRank = 0; // For average rank
+    let validScores = 0; // Count of races with valid scores
+    let validRanks = 0; // Count of races with valid ranks
 
     groupRaceIds.forEach((id) => {
       const race = races[id];
+
+      // Total counts for solved, unsolved, and reviewed
       totalSolved += race.solved?.length || 0;
       totalUnsolved += race.unsolved?.length || 0;
       totalReviewed += race.reviewed?.length || 0;
+
+      // Calculate high score
       if (race.score && race.score > highScore) {
         highScore = race.score;
       }
+
+      // Calculate high rank (lower rank is better, so we check for the smallest rank)
+      if (race.rank && race.rank < highRank) {
+        highRank = race.rank;
+      }
+
+      // Sum for average score and rank
+      if (race.score) {
+        totalScore += race.score;
+        validScores++;
+      }
+
+      if (race.rank) {
+        totalRank += race.rank;
+        validRanks++;
+      }
     });
 
-    return {totalSolved, totalUnsolved, totalReviewed, highScore};
+    // Calculate averages (avoid division by zero)
+    const averageScore = validScores > 0 ? totalScore / validScores : 0;
+    const averageRank = validRanks > 0 ? totalRank / validRanks : 0;
+
+    // Round to 2 decimal places and remove trailing zeros
+    const roundedAverageScore = parseFloat(averageScore.toFixed(2));
+    const roundedAverageRank = parseFloat(averageRank.toFixed(2));
+
+    return {
+      totalSolved,
+      totalUnsolved,
+      totalReviewed,
+      highScore,
+      highRank: highRank === Infinity ? null : highRank, // Return null if no valid rank is found
+      averageScore: roundedAverageScore,
+      averageRank: roundedAverageRank,
+    };
   }
 
   function getSortedDateLabels(groupedRaces) {

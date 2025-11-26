@@ -94,6 +94,7 @@ summary::-webkit-details-marker {
   margin-top: var(--space-sm);
   padding-top: var(--space-sm);
   padding-left: var(--space-sm);
+  padding-bottom: var(--space-sm);
   border-top: 1px solid var(--border);
 
   display: flex;
@@ -132,10 +133,21 @@ h3 {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-bottom: var(--space-sm);
 }
 
 .date-group-label {
   flex: 1;
+}
+
+.date-group-label > span {
+  text-transform: lowercase;
+  font-weight: normal;
+}
+
+.date-group-stats-container {
+  color: var(--text-muted);
+  font-size: 0.8rem;
 }
 
 .date-group-stats {
@@ -143,6 +155,11 @@ h3 {
   font-weight: normal;
   text-transform: none;
   letter-spacing: normal;
+}
+
+.date-group-stat {
+  display: inline-block;
+  min-width: 15ch;
 }
 
 /* ============================================================================
