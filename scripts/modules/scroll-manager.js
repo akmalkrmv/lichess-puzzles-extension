@@ -3,7 +3,7 @@
  */
 
 const ScrollManager = (() => {
-  const scrollContainer = document.documentElement;
+  const scrollContainer = document.querySelector('.tabs-content');
   let scrollTimeout;
 
   function save() {
@@ -20,9 +20,9 @@ const ScrollManager = (() => {
   }
 
   function setupThrottledListener() {
-    document.addEventListener('scroll', () => {
+    scrollContainer.addEventListener('scroll', () => {
       clearTimeout(scrollTimeout);
-      scrollTimeout = setTimeout(save, 300);
+      scrollTimeout = setTimeout(save, 200);
     });
   }
 
