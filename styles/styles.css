@@ -25,6 +25,14 @@ details {
   background-color: var(--bg-light);
   border: 1px solid var(--border);
   border-radius: 6px;
+
+  border-color: var(--unsolved-color);
+  border-color: hsl(from var(--unsolved-color) h s l / 0.7);
+
+  &[data-unsolved='0'] {
+    border-color: var(--solved-color);
+    border-color: hsl(from var(--solved-color) h s l / 0.7);
+  }
 }
 
 summary {
@@ -129,6 +137,10 @@ summary::-webkit-details-marker {
   text-decoration: none;
   color: #2980b9;
   word-break: break-all;
+
+  &:hover {
+    text-decoration: underline;
+  }
 }
 
 .links a.unsolved {

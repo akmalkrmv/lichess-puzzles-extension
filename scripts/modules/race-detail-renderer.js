@@ -9,6 +9,7 @@ const RaceDetailRenderer = (() => {
 
     const details = document.createElement('details');
     details.dataset.raceId = id;
+    details.dataset.unsolved = race.unsolved?.length || 0;
 
     if (openRaces[id]) {
       details.open = true;
