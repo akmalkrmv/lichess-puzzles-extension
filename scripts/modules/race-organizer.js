@@ -29,9 +29,12 @@ const RaceOrganizer = (() => {
     let totalRank = 0; // For average rank
     let validScores = 0; // Count of races with valid scores
     let validRanks = 0; // Count of races with valid ranks
+    let timestamp = 0;
 
     groupRaceIds.forEach((id) => {
       const race = races[id];
+
+      timestamp = race.timestamp;
 
       // Total counts for solved, unsolved, and reviewed
       totalSolved += race.solved?.length || 0;
@@ -63,12 +66,17 @@ const RaceOrganizer = (() => {
     // Calculate averages (avoid division by zero)
     const averageScore = validScores > 0 ? totalScore / validScores : 0;
     const averageRank = validRanks > 0 ? totalRank / validRanks : 0;
+    const averageSolves = groupRaceIds.length > 0 ? totalSolved / groupRaceIds.length : 0;
+    const averageFails = groupRaceIds.length > 0 ? (totalUnsolved + totalReviewed) / groupRaceIds.length : 0;
 
     // Round to 2 decimal places and remove trailing zeros
     const roundedAverageScore = parseFloat(averageScore.toFixed(2));
     const roundedAverageRank = parseFloat(averageRank.toFixed(2));
+    const roundedAverageSolves = parseFloat(averageSolves.toFixed(2));
+    const roundedAverageFails = parseFloat(averageFails.toFixed(2));
 
     return {
+      timestamp,
       totalSolved,
       totalUnsolved,
       totalReviewed,
@@ -76,6 +84,8 @@ const RaceOrganizer = (() => {
       highRank: highRank === Infinity ? null : highRank, // Return null if no valid rank is found
       averageScore: roundedAverageScore,
       averageRank: roundedAverageRank,
+      averageSolves: roundedAverageSolves,
+      averageFails: roundedAverageFails,
     };
   }
 

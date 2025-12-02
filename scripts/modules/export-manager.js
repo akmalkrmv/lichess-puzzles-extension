@@ -128,7 +128,7 @@ const ExportManager = (() => {
         </div>
 
         <div class="export-actions">
-          ${''/*`<button class="btn btn-primary" id="export-btn">📥 Export to File</button>`}*/}
+          ${'' /*`<button class="btn btn-primary" id="export-btn">📥 Export to File</button>`}*/}
           <button class="btn" id="copy-btn">📋 Copy to Clipboard</button>
         </div>
 
@@ -199,9 +199,7 @@ const ExportManager = (() => {
         const stats = calculateStatistics(races, selectedRange);
         const includeStats = document.getElementById('include-stats')?.checked;
         const content = buildExportContent(puzzles, stats, includeStats);
-        navigator.clipboard.writeText(content).then(() => {
-          // alert('Copied to clipboard!');
-        });
+        navigator.clipboard.writeText(content).then(() => SnackbarManager.show('Copied to Clipboard'));
       });
     });
 

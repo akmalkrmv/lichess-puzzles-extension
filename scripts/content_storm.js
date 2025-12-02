@@ -3,23 +3,21 @@
 
 (function () {
   function collectPuzzles() {
-    const score = Number(document.querySelector('.puz-side__solved__text')?.textContent || 0);
-    const rankString = document.querySelector('.race__post__rank')?.textContent;
-
+    const score = Number(document.querySelector('.storm--end__score__number')?.textContent || 0);
     const solved = [...document.querySelectorAll('.puz-history__round:has(good) a')].map((a) => a.href);
     const unsolved = [...document.querySelectorAll('.puz-history__round:has(bad) a')].map((a) => a.href);
     const reviewed = [];
 
     // Extract rank and total players using the helper function
-    const {rank, totalPlayers} = extractRank(rankString);
+    const [moves, accuracy, combo, time, timePerMove, highestSolved] = [...document.querySelectorAll('.slist td number')].map((element) => Number(element.textContent));
 
     if (unsolved.length === 0 && solved.length === 0) return;
 
-    const raceId = location.pathname.split('/').pop(); // e.g. btUJ7
+    const stormId = generateRandomUIDString(); // e.g. btUJ7
 
     chrome.runtime.sendMessage({
-      type: 'puzzle_race_finished',
-      raceId,
+      type: 'puzzle_storm_finished',
+      stormId,
       timestamp: Date.now(),
       // puzzles
       solved,
@@ -27,25 +25,25 @@
       reviewed,
       // stats
       score,
-      rank,
-      totalPlayers,
+      moves,
+      accuracy,
+      combo,
+      time,
+      timePerMove,
+      highestSolved,
     });
   }
 
-  // Function to extract rank and total players from the DOM
-  function extractRank(rankString) {
-    let rank = 0;
-    let totalPlayers = 0;
+  function generateRandomUIDString() {
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    let randomString = '';
 
-    if (rankString) {
-      const match = rankString.match(/Your rank:\s*(\d+)\/(\d+)/);
-      if (match) {
-        rank = Number(match[1]); // Rank number
-        totalPlayers = Number(match[2]); // Total players
-      }
+    for (let i = 0; i < 5; i++) {
+      const randomIndex = Math.floor(Math.random() * characters.length);
+      randomString += characters[randomIndex];
     }
 
-    return {rank, totalPlayers};
+    return randomString;
   }
 
   // The history list appears when race ends.

@@ -47,5 +47,16 @@ const DateFormatter = (() => {
     return raceDate.toLocaleDateString([], {month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit'});
   }
 
-  return {getRelativeDateLabel, formatRaceTime};
+  // Currently mm/dd/yy
+  // TODO: move to settings
+  function getFullDate(timestamp) {
+    const date = new Date(timestamp);
+    const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are 0-indexed
+    const day = String(date.getDate()).padStart(2, '0');
+    const year = String(date.getFullYear()); 
+
+    return `${month}/${day}/${year}`;
+  }
+
+  return {getRelativeDateLabel, formatRaceTime, getFullDate};
 })();

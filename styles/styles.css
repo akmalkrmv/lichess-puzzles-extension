@@ -90,6 +90,27 @@ summary::-webkit-details-marker {
   background-color: var(--bg-light);
 }
 
+.copy-stats-badge {
+  color: var(--text-muted);
+  border: 1px solid var(--border);
+  background-color: var(--bg-light);
+  cursor: pointer;
+  &:hover {
+    background-color: var(--bg);
+  }
+}
+
+.copy-links-badge {
+  margin-left: var(--space-sm);
+  color: var(--text-muted);
+  border: 1px solid var(--border);
+  background-color: var(--bg-light);
+  cursor: pointer;
+  &:hover {
+    background-color: var(--bg);
+  }
+}
+
 .links {
   margin-top: var(--space-sm);
   padding-top: var(--space-sm);
@@ -160,6 +181,10 @@ h3 {
 .date-group-stat {
   display: inline-block;
   min-width: 15ch;
+}
+
+.date-group-stats-container .time-stat {
+  margin-bottom: var(--space-sm);
 }
 
 /* ============================================================================
@@ -477,4 +502,36 @@ h3 {
   padding: var(--space-xl) var(--space-md);
   color: var(--text-muted);
   font-size: 0.95rem;
+}
+
+/* ============================================================================
+ * SNACKBAR
+ * ============================================================================ */
+
+.snackbar-container {
+  position: absolute;
+  top: 0;
+  opacity: 0;
+  visibility: hidden;
+  width: inherit;
+  transition: all 200ms ease-in-out;
+}
+
+.snackbar {
+  margin: 1rem 2rem;
+  padding: 1rem;
+  min-height: 1rem;
+  font-size: large;
+  font-weight: normal;
+  color: var(--text-muted);
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  background-color: var(--bg);
+  box-shadow: var(--shadow-soft);
+  cursor: default;
+  text-align: center;
+  transition: all 200ms ease-in-out;
+
+  background-color: var(--text-muted);
+  color: var(--bg-dark);
 }

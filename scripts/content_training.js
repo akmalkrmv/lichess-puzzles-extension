@@ -4,13 +4,57 @@
 (function () {
   const PUZZLE_FEEDBACK_SUCCESS_SELECTOR = '.puzzle__feedback .complete';
   const PUZZLE_FEEDBACK_FAIL_SELECTOR = '.puzzle__feedback .fail';
+  const PUZZLE_FEEDBACK_NEXT_SELECTOR = '.puzzle__feedback .puzzle__more';
 
   // Extract puzzle ID (last path segment)
   const puzzleId = location.pathname.split('/').pop(); // e.g. "Iy8iI"
 
   // Observe dynamic DOM
-  const observer = new MutationObserver(checkIfPuzzleSolved);
+  const observer = new MutationObserver(() => checkIfPuzzleSolved());
   observer.observe(document.body, {childList: true, subtree: true});
+
+  const dateRanges = {
+    today: {label: 'Today', offset: 0},
+    yesterday: {label: 'Yesterday', offset: 1},
+    week: {label: 'Last 7 days', offset: 7},
+    month: {label: 'Last 30 days', offset: 30},
+    all: {label: 'All time', offset: Infinity},
+  };
+
+  function getDateRangeFilter(range) {
+    const offset = dateRanges[range]?.offset;
+    if (offset === undefined) return null;
+
+    // Create today at midnight
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    // Calculate cutoff date at midnight
+    const cutoffDate = new Date(today);
+    cutoffDate.setDate(cutoffDate.getDate() - offset);
+
+    return (timestamp) => {
+      if (offset === Infinity) return true;
+      const raceDate = new Date(timestamp);
+      raceDate.setHours(0, 0, 0, 0);
+      return raceDate >= cutoffDate;
+    };
+  }
+
+  function filterUnsolvedPuzzles(races, range) {
+    const filter = getDateRangeFilter(range);
+    if (!filter) return [];
+
+    const puzzles = [];
+    Object.values(races).forEach((race) => {
+      if (filter(race.timestamp) && race.unsolved) {
+        puzzles.push(...race.unsolved);
+      }
+    });
+
+    // Remove duplicates
+    return [...new Set(puzzles)];
+  }
 
   function checkIfPuzzleSolved() {
     const isPuzzleSolved = !!document.querySelector(PUZZLE_FEEDBACK_SUCCESS_SELECTOR);
@@ -22,6 +66,23 @@
 
       // Optional: auto-close puzzle tab after solving
       // chrome.runtime.sendMessage({ type: "close_tab" });
+
+      const nextPuzzleContainer = document.querySelector(PUZZLE_FEEDBACK_NEXT_SELECTOR);
+      if (!!nextPuzzleContainer) {
+        chrome.storage.local.get(['races'], (data) => {
+          const races = data.races || {};
+          const unsolvedPuzzles = filterUnsolvedPuzzles(races, 'today')
+            .map((link) => link.split('/').pop())
+            .filter((id) => id !== puzzleId);
+
+          if (unsolvedPuzzles && unsolvedPuzzles.length) {
+            const anchor = document.createElement('a');
+            anchor.href = unsolvedPuzzles.pop();
+            anchor.textContent = `Next Unsolved (${unsolvedPuzzles.length})`;
+            nextPuzzleContainer.appendChild(anchor);
+          }
+        });
+      }
 
       observer.disconnect();
     }

@@ -24,13 +24,23 @@ const GroupHeaderRenderer = (() => {
     const labelElement = createElement('h3', ['date-group-label']);
     labelElement.innerHTML = `${dateLabel} <span>(<b>${groupRaceIds.length}</b> ${runLabel(groupRaceIds.length)})</span>`;
 
+    // Full date
+    const formattedDate = DateFormatter.getFullDate(stats.timestamp);
+
     // Create and append the stats container (below date)
     const statsContainer = createElement('div', ['date-group-stats-container']);
     const statsText = [
       // `<div><b>${groupRaceIds.length}</b> ${runLabel(groupRaceIds.length)}.</div>`,
+      `<div class="time-stat">
+        ${stats.timestamp ? `<span class="date-group-stat"><b>${formattedDate}</b></span>` : ''}
+      </div>`,
       `<div>
         ${stats.highScore ? `<span class="date-group-stat">High score: <b>${stats.highScore}</b></span>` : ''}
         ${stats.averageScore ? `<span class="date-group-stat">Avg. score: <b>${stats.averageScore}</b></span>` : ''}
+      </div>`,
+      `<div>
+        <span class="date-group-stat">Avg. solves: <b>${stats.averageSolves}</b></span>
+        <span class="date-group-stat">Avg. fails: <b>${stats.averageFails}</b></span>
       </div>`,
       `<div>
         ${stats.highRank ? `<span class="date-group-stat">High rank: <b>${stats.highRank}</b></span>` : ''}
@@ -59,6 +69,15 @@ const GroupHeaderRenderer = (() => {
 
     heading.appendChild(headingLeft);
     heading.appendChild(headingRight);
+
+    const copyStatsButton = createElement('span', ['badge', 'copy-stats-badge']);
+    copyStatsButton.textContent = 'copy stats';
+    copyStatsButton.addEventListener('click', function () {
+      const content = [...heading.querySelectorAll('.date-group-stat')].map((element) => element.textContent).join('\n');
+      navigator.clipboard.writeText(content).then(() => SnackbarManager.show('Stats copied'));
+    });
+    const timeStat = heading.querySelector('.time-stat');
+    timeStat.appendChild(copyStatsButton);
 
     return heading;
   }

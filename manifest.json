@@ -10,12 +10,12 @@
   },
   "content_scripts": [
     {
-      "matches": ["https://lichess.org/*", "http://127.0.0.1:5500/*"],
+      "matches": ["https://lichess.org/racer/*"],
       "js": ["scripts/content_racer.js"]
     },
     {
-      "matches": ["https://lichess.org/racer/*"],
-      "js": ["scripts/content_racer.js"]
+      "matches": ["https://lichess.org/storm/*"],
+      "js": ["scripts/content_storm.js"]
     },
     {
       "matches": ["https://lichess.org/training/*"],

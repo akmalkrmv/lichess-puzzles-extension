@@ -37,23 +37,45 @@ const RaceDetailRenderer = (() => {
 
       <div class="links">
         <div>
-          <div><strong>Unsolved</strong></div>
+          <div><strong>Unsolved</strong><span class="badge copy-links-badge">copy links<span></div>
           ${LinkRenderer.renderLinks(race.unsolved, 'unsolved')}
         </div>
-
         <div>
-          <div><strong>Reviewed</strong></div>
+          <div><strong>Reviewed</strong><span class="badge copy-links-badge">copy links<span></div>
           ${LinkRenderer.renderLinks(race.reviewed, 'reviewed')}
         </div>
-
         ${showSolvedPuzzles ? `
         <div>
-          <div><strong>Solved</strong></div>
+          <div><strong>Solved</strong><span class="badge copy-links-badge">copy links<span></div>
           ${LinkRenderer.renderLinks(race.solved, 'solved')}
         </div>
         ` : ''}
       </div>
     `;
+
+    details.addEventListener('click', (event) => {
+      if (event.target.classList.contains('copy-links-badge')) {
+        // Find the parent div of the clicked "copy" badge
+        const parentDiv = event.target.parentElement.parentElement;
+
+        // Find all anchor tags (links) in the same section
+        const anchorElements = parentDiv.querySelectorAll('a');
+
+        // Extract the text content from each anchor element and join them with new line
+        const content = Array.from(anchorElements)
+          .map((anchor) => anchor.textContent.trim()) // Get text inside each anchor
+          .filter((text) => text.length > 0) // Filter out any empty text
+          .join('\n'); // Join them with new line for separation
+
+          console.log(content)
+
+        // Copy the content to clipboard
+        navigator.clipboard
+          .writeText(content)
+          .then(() => SnackbarManager.show('Links copied'))
+          .catch((err) => console.error('Error copying links: ', err));
+      }
+    });
 
     details.addEventListener('toggle', () => {
       chrome.storage?.local.get(['openRaces'], ({openRaces = {}}) => {
