@@ -13,7 +13,8 @@
     // Extract rank and total players using the helper function
     const {rank, totalPlayers} = extractRank(rankString);
 
-    if (unsolved.length === 0 && solved.length === 0) return;
+    // Ignore probable Idle
+    if (unsolved.length <= 1 && solved.length === 0) return;
 
     const raceId = location.pathname.split('/').pop(); // e.g. btUJ7
 
