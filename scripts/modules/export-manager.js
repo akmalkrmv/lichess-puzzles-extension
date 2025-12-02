@@ -3,36 +3,8 @@
  */
 
 const ExportManager = (() => {
-  const dateRanges = {
-    today: {label: 'Today', offset: 0},
-    yesterday: {label: 'Yesterday', offset: 1},
-    week: {label: 'Last 7 days', offset: 7},
-    month: {label: 'Last 30 days', offset: 30},
-    all: {label: 'All time', offset: Infinity},
-  };
-
-  function getDateRangeFilter(range) {
-    const offset = dateRanges[range]?.offset;
-    if (offset === undefined) return null;
-
-    // Create today at midnight
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-
-    // Calculate cutoff date at midnight
-    const cutoffDate = new Date(today);
-    cutoffDate.setDate(cutoffDate.getDate() - offset);
-
-    return (timestamp) => {
-      if (offset === Infinity) return true;
-      const raceDate = new Date(timestamp);
-      raceDate.setHours(0, 0, 0, 0);
-      return raceDate >= cutoffDate;
-    };
-  }
-
   function filterUnsolvedPuzzles(races, range) {
-    const filter = getDateRangeFilter(range);
+    const filter = DateFormatter.getDateRangeFilter(range);
     if (!filter) return [];
 
     const puzzles = [];
@@ -47,7 +19,7 @@ const ExportManager = (() => {
   }
 
   function calculateStatistics(races, range) {
-    const filter = getDateRangeFilter(range);
+    const filter = DateFormatter.getDateRangeFilter(range);
     if (!filter) return null;
 
     let highScore = 0;
@@ -107,6 +79,10 @@ const ExportManager = (() => {
     const container = document.getElementById('export-content');
     if (!container) return;
 
+    const dateFilterButtons = Object.entries(DateFormatter.DATE_RANGES)
+      .map(([key, {label}]) => `<button class="btn btn-sm" data-range="${key}">${label}</button>`)
+      .join('');
+
     container.innerHTML = `
       <div class="export-section">
         <h3>Export Unsolved Puzzles</h3>
@@ -114,9 +90,7 @@ const ExportManager = (() => {
         <div class="export-group">
           <label>Select Date Range</label>
           <div class="button-group">
-            ${Object.entries(dateRanges)
-              .map(([key, {label}]) => `<button class="btn btn-sm" data-range="${key}">${label}</button>`)
-              .join('')}
+            ${dateFilterButtons}
           </div>
         </div>
 

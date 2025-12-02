@@ -93,15 +93,7 @@ The popup displays:
 - Quick links to navigate to specific puzzles
 - Current tab indicator to show which puzzle you're viewing
 
-## Theme Screenshots
+## Preview
 
-<div style="display: flex; gap: 20px; justify-content: center;">
-  <div style="text-align: center; flex: 1;">
-    <h3>Dark Theme</h3>
-    <img src="screenshots/dark-theme.png" alt="Dark Theme Screenshot" style="max-width: 100%; border-radius: 8px;">
-  </div>
-  <div style="text-align: center; flex: 1;">
-    <h3>Light Theme</h3>
-    <img src="screenshots/light-theme.png" alt="Light Theme Screenshot" style="max-width: 100%; border-radius: 8px;">
-  </div>
-</div>
+![4](screenshots/dark-theme.png)
+![5](screenshots/light-theme.png)
