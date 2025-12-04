@@ -10,7 +10,10 @@ async function getActiveTabUrl() {
 
 function setUpVersion() {
   const manifest = chrome.runtime?.getManifest() || {version: '0.0.0'};
-  document.getElementById('version')?.textContent = manifest.version;
+  const versionElement = document.getElementById('version');
+  if (versionElement) {
+    versionElement.textContent = manifest.version;
+  }
 }
 
 async function initializeApp() {
