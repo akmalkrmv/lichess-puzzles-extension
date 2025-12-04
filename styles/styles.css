@@ -10,6 +10,7 @@
 
 body {
   width: 460px;
+  max-width: 1600px;
   min-height: 600px;
   margin: 0 auto;
   padding: 0;
@@ -17,6 +18,17 @@ body {
   background-color: var(--bg);
   height: 100%;
   overflow: hidden;
+}
+
+body.side-panel {
+  width: 100%;
+}
+
+footer {
+  text-align: center;
+  padding: var(--space-sm);
+  color: var(--text-muted);
+  background-color: var(--bg-light);
 }
 
 details {
@@ -274,7 +286,12 @@ h3 {
   padding: var(--space-lg) var(--space-md);
   padding-top: 0;
   width: 460px;
+  max-width: 1600px;
   margin: 0 auto;
+}
+
+.body.side-panel .tabs-content {
+  width: 100%;
 }
 
 .tabs-content section {

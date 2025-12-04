@@ -8,6 +8,11 @@ async function getActiveTabUrl() {
   return tab?.url || '';
 }
 
+function setUpVersion() {
+  const manifest = chrome.runtime?.getManifest() || {version: '0.0.0'};
+  document.getElementById('version')?.textContent = manifest.version;
+}
+
 async function initializeApp() {
   // Initialize settings first
   const settings = await SettingsManager.getSettings();
@@ -17,6 +22,8 @@ async function initializeApp() {
   LinkHandler.setActiveTab(await getActiveTabUrl());
   LinkHandler.setup();
   ScrollManager.setupThrottledListener();
+
+  setUpVersion();
 
   // Initialize tab manager and wait for it to complete
   await TabManager.initialize();

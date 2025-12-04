@@ -13,8 +13,36 @@
   const observer = new MutationObserver(() => checkIfPuzzleSolved());
   observer.observe(document.body, {childList: true, subtree: true});
 
+  const DATE_RANGES = {
+    today: {label: 'Today', offset: 0},
+    yesterday: {label: 'Yesterday', offset: 1},
+    week: {label: 'Last 7 days', offset: 7},
+    month: {label: 'Last 30 days', offset: 30},
+    all: {label: 'All time', offset: Infinity},
+  };
+
+  function getDateRangeFilter(range) {
+    const offset = DATE_RANGES[range]?.offset;
+    if (offset === undefined) return null;
+
+    // Create today at midnight
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    // Calculate cutoff date at midnight
+    const cutoffDate = new Date(today);
+    cutoffDate.setDate(cutoffDate.getDate() - offset);
+
+    return (timestamp) => {
+      if (offset === Infinity) return true;
+      const raceDate = new Date(timestamp);
+      raceDate.setHours(0, 0, 0, 0);
+      return raceDate >= cutoffDate;
+    };
+  }
+
   function filterUnsolvedPuzzles(races, range) {
-    const filter = DateFormatter.getDateRangeFilter(range);
+    const filter = getDateRangeFilter(range);
     if (!filter) return [];
 
     const puzzles = [];
@@ -29,6 +57,8 @@
   }
 
   function appendNextUnsolvedLink(container, puzzleLink, count) {
+    if (!container) return;
+
     const link = document.createElement('a');
     link.href = puzzleLink;
     link.textContent = `Next Unsolved (${count})`;
@@ -46,7 +76,7 @@
 
     const nextPuzzleContainer = document.querySelector(PUZZLE_FEEDBACK_NEXT_SELECTOR);
     if (!nextPuzzleContainer) {
-      return observer.disconnect();
+      return;
     }
 
     chrome.storage.local.get(['races'], (data) => {
@@ -64,6 +94,8 @@
     });
 
     observer.disconnect();
+
+    return;
   }
 
   // Also check once on load (in case feedback appears instantly)
