@@ -1,0 +1,16 @@
+{
+  "name": "lichess-puzzle-collector",
+  "version": "1.1.0",
+  "description": "Automates collecting unsolved puzzles on Lichess",
+  "license": "ISC",
+  "author": "akmalkrmv",
+  "type": "module",
+  "scripts": {
+    "watch": "tsc -w",
+    "start": "tsc"
+  },
+  "devDependencies": {
+    "@types/chrome": "^0.1.32",
+    "typescript": "^5.4.0"
+  }
+}
