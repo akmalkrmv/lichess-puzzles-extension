@@ -1,0 +1,14 @@
+# Node modules
+node_modules/
+
+# TypeScript
+*.tsbuildinfo
+tsconfig.tsbuildinfo
+
+# IDE/Editor settings
+.vscode/
+.idea/
+
+# Log files
+*.log
+
