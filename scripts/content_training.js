@@ -5,6 +5,7 @@
   const PUZZLE_FEEDBACK_SUCCESS_SELECTOR = '.puzzle__feedback .complete';
   const PUZZLE_FEEDBACK_FAIL_SELECTOR = '.puzzle__feedback .fail';
   const PUZZLE_FEEDBACK_NEXT_SELECTOR = '.puzzle__feedback .puzzle__more';
+  const PUZZLE_TRAINING = 'https://lichess.org/training';
 
   // Extract puzzle ID (last path segment)
   const puzzleId = location.pathname.split('/').pop(); // e.g. "Iy8iI"
@@ -56,11 +57,15 @@
     return [...new Set(puzzles)];
   }
 
+  function prependPathIfNeeded(path, puzzleLinkOrId) {
+    return puzzleLinkOrId.startsWith(path) ? puzzleLinkOrId : `${path}/${puzzleLinkOrId}`;
+  }
+
   function appendNextUnsolvedLink(container, puzzleLink, count) {
     if (!container) return;
 
     const link = document.createElement('a');
-    link.href = puzzleLink;
+    link.href = prependPathIfNeeded(PUZZLE_TRAINING, puzzleLink);
     link.textContent = `Next Unsolved (${count})`;
     container.appendChild(link);
   }

@@ -3,6 +3,8 @@
  */
 
 const ExportManager = (() => {
+  const PUZZLE_TRAINING = 'https://lichess.org/training';
+
   function filterUnsolvedPuzzles(races, range) {
     const filter = DateFormatter.getDateRangeFilter(range);
     if (!filter) return [];
@@ -41,6 +43,10 @@ const ExportManager = (() => {
     return {highScore, totalRaces, totalSolved, totalUnsolved};
   }
 
+  function prependPathIfNeeded(path, puzzleLinkOrId) {
+    return puzzleLinkOrId.startsWith(path) ? puzzleLinkOrId : `${path}/${puzzleLinkOrId}`;
+  }
+
   function buildExportContent(puzzles, stats, includeStats) {
     let content = '';
 
@@ -53,7 +59,8 @@ const ExportManager = (() => {
       content += `\n=== UNSOLVED PUZZLES ===\n\n`;
     }
 
-    content += puzzles.join('\n');
+    content += puzzles.map((puzzle) => prependPathIfNeeded(PUZZLE_TRAINING, puzzle)).join('\n');
+
     return content;
   }
 
