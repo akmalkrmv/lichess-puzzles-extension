@@ -1,29 +1,46 @@
-import {IRace, Race, RaceStats} from '../models';
+import {IRace, IStorm, Puzzles, Race, RaceStats, Storm, StormStats} from '../models';
 
-export const testData: Record<string, IRace> = generateRandomRaces();
+export const testRaceData: Record<string, IRace> = generateRaceData();
+export const testStormData: Record<string, IStorm> = generateStormData();
 
 // Helper functions to generate random test data
-function generateRaceId() {
+function generateRandomId(): string {
   return Math.random().toString(36).substring(2, 7);
+}
+
+function generateRandomNumber(min: number, max: number): number {
+  return Math.floor(Math.random() * max) + min;
+}
+
+function generateRaceStats(): RaceStats {
+  const totalPlayers: number = generateRandomNumber(2, 9); // 2-10 players
+  const rank: number = generateRandomNumber(1, totalPlayers - 1); // 1 to totalPlayers-1
+  const score: number = generateRandomNumber(0, 121); // 0-120
+
+  return {score, rank, totalPlayers};
+}
+
+function generateStormStats(): StormStats {
+  return {
+    score: generateRandomNumber(0, 1000), // Assuming score ranges from 0 to 1000
+    moves: generateRandomNumber(60, 73),
+    accuracy: generateRandomNumber(85, 89),
+    combo: generateRandomNumber(17, 25),
+    time: generateRandomNumber(115, 142),
+    timePerMove: generateRandomNumber(1.72, 2.05),
+    highestSolved: generateRandomNumber(1457, 1558),
+  };
 }
 
 function generatePuzzleLinks(count: number): string[] {
   const puzzles: string[] = [];
   for (let i = 0; i < count; i++) {
-    puzzles.push(generateRaceId());
+    puzzles.push(generateRandomId());
   }
   return puzzles;
 }
 
-function generateRaceStats(): RaceStats {
-  const totalPlayers = Math.floor(Math.random() * 9) + 2; // 2-10 players
-  const rank = Math.floor(Math.random() * (totalPlayers - 1)) + 1; // 1 to totalPlayers-1
-  const score = Math.floor(Math.random() * 121); // 0-120
-  return {score, rank, totalPlayers};
-}
-
-function generateRandomRaces() {
-  const data: Record<string, IRace> = {};
+function createTestTimestamps(): number[] {
   const now: number = Date.now();
   const hour: number = 1000 * 60 * 60;
   const timeOffsets: number[] = [
@@ -44,23 +61,44 @@ function generateRandomRaces() {
     -hour * 24 * 11, // 11 days ago
     -hour * 24 * 14, // 2 weeks ago
   ];
+  return timeOffsets.map((offset) => now + offset);
+}
 
-  timeOffsets.forEach((offset: number) => {
-    const raceId: string = generateRaceId();
-    const solvedCount: number = Math.floor(Math.random() * 20) + 5;
-    const unsolvedCount: number = Math.floor(Math.random() * 10);
-    const reviewedCount: number = Math.floor(Math.random() * 5);
+function generatePuzzleData(): Puzzles {
+  return {
+    solved: generatePuzzleLinks(generateRandomNumber(5, 20)),
+    unsolved: generatePuzzleLinks(generateRandomNumber(0, 10)),
+    reviewed: generatePuzzleLinks(generateRandomNumber(0, 5)),
+  };
+}
 
-    const race: Race = new Race(raceId);
-    race.timestamp = now + offset;
+function generateRaceData(): Record<string, IRace> {
+  const data: Record<string, IRace> = {};
+  const timestamps: number[] = createTestTimestamps();
+
+  timestamps.forEach((timestamp) => {
+    const randomId: string = generateRandomId();
+    const race = new Race(randomId);
+    race.timestamp = timestamp;
     race.setStats(generateRaceStats());
-    race.setPuzzles({
-      solved: generatePuzzleLinks(solvedCount),
-      unsolved: generatePuzzleLinks(unsolvedCount),
-      reviewed: generatePuzzleLinks(reviewedCount),
-    });
+    race.setPuzzles(generatePuzzleData());
+    data[randomId] = race;
+  });
 
-    data[raceId] = race;
+  return data;
+}
+
+function generateStormData(): Record<string, IStorm> {
+  const data: Record<string, IStorm> = {};
+  const timestamps: number[] = createTestTimestamps();
+
+  timestamps.forEach((timestamp) => {
+    const randomId: string = generateRandomId();
+    const storm = new Storm(generateRandomId());
+    storm.timestamp = timestamp;
+    storm.setStats(generateStormStats());
+    storm.setPuzzles(generatePuzzleData());
+    data[randomId] = storm;
   });
 
   return data;

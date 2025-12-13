@@ -68,9 +68,9 @@ function generateTestData(generateStats) {
 
   timeOffsets.forEach((offset) => {
     const randomId = generateRandomId();
-    const solvedCount = Math.floor(Math.random() * 20) + 5;
-    const unsolvedCount = Math.floor(Math.random() * 10);
-    const reviewedCount = Math.floor(Math.random() * 5);
+    const solvedCount = generateRandomNumber(5, 20);
+    const unsolvedCount = generateRandomNumber(0, 10);
+    const reviewedCount = generateRandomNumber(0, 5);
 
     data[randomId] = {
       reviewed: generatePuzzleLinks(reviewedCount),
