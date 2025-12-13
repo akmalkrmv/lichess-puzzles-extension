@@ -5,12 +5,20 @@
   "license": "ISC",
   "author": "akmalkrmv",
   "type": "module",
+
   "scripts": {
-    "watch": "tsc -w",
-    "start": "tsc"
+    "build:ts": "tsc",
+    "build:content": "node build-content.mjs",
+    "build": "npm run build:ts && npm run build:content",
+
+    "watch:ts": "tsc -w",
+    "watch:content": "node build-content.mjs --watch",
+    "watch": "npm run watch:ts"
   },
+  
   "devDependencies": {
     "@types/chrome": "^0.1.32",
+    "esbuild": "^0.27.1",
     "typescript": "^5.4.0"
   }
 }
