@@ -6,6 +6,11 @@
   --unsolved-color: hsl(6, 63%, 46%);
   --reviewed-color: hsl(290, 63%, 52%);
   --solved-color: hsl(145, 63%, 42%);
+
+  /* Less saturated */
+  --unsolved-color: hsl(6, 53%, 46%);
+  --reviewed-color: hsl(290, 53%, 52%);
+  --solved-color: hsl(145, 53%, 42%);
 }
 
 body {
@@ -31,12 +36,21 @@ footer {
   background-color: var(--bg-light);
 }
 
+.race-run-card {
+  margin-block: var(--space-md);
+  padding-inline: var(--space-md);
+  padding-block-end: var(--space-md);
+  background-color: var(--bg-light);
+  border-radius: var(--border-radius);
+  border: var(--border-card);
+}
+
 details {
   padding: var(--space-xs) var(--space-md);
   margin-bottom: var(--space-sm);
   background-color: var(--bg-light);
   border: 1px solid var(--border);
-  border-radius: 6px;
+  border-radius: var(--border-radius);
 
   border-color: var(--unsolved-color);
   border-color: hsl(from var(--unsolved-color) h s l / 0.7);
@@ -168,7 +182,7 @@ summary::-webkit-details-marker {
 h3 {
   margin-top: var(--space-lg);
   margin-bottom: var(--space-sm);
-  color: var(--text-muted);
+  color: var(--text);
   font-size: 0.95rem;
   text-transform: uppercase;
   letter-spacing: 0.5px;
@@ -178,7 +192,7 @@ h3 {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: var(--space-sm);
+  margin-bottom: var(--space-md);
 }
 
 .date-group-label {
@@ -243,8 +257,6 @@ h3 {
 
 .tabs-nav {
   display: flex;
-  /* gap: 0.5rem;
-  padding: 0.8rem 1rem; */
   border-bottom: 1px solid var(--border);
   background-color: var(--bg-light);
   overflow-x: auto;
@@ -260,9 +272,14 @@ h3 {
   cursor: pointer;
   font-size: 0.95rem;
   font-weight: 500;
-  border-bottom: 3px solid transparent;
+  border-bottom: 1px solid transparent;
   transition: all 0.2s ease;
   border-radius: 4px 4px 0 0;
+
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: var(--space-sm);
 }
 
 .tab-btn:hover {
@@ -283,11 +300,11 @@ h3 {
 .tabs-content {
   flex: 1;
   overflow-y: auto;
-  padding: var(--space-lg) var(--space-md);
-  padding-top: 0;
   width: 460px;
   max-width: 1600px;
   margin: 0 auto;
+  padding-inline: var(--space-md);
+  padding-block-end: var(--space-lg);
 }
 
 .body.side-panel .tabs-content {
@@ -553,7 +570,7 @@ h3 {
   font-size: large;
   font-weight: normal;
   color: var(--text-muted);
-  border-radius: 6px;
+  border-radius: var(--border-radius);
   border: 1px solid var(--border);
   background-color: var(--bg);
   box-shadow: var(--shadow-soft);

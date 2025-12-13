@@ -1,0 +1,166 @@
+:root {
+  /* ===== Spacing System (8px base unit) ===== */
+  --space-xs: 0.25rem;    /* 4px */
+  --space-sm: 0.5rem;     /* 8px */
+  --space-md: 1rem;       /* 16px */
+  --space-lg: 1.5rem;     /* 24px */
+  --space-xl: 2rem;       /* 32px */
+  --space-2xl: 2.5rem;    /* 40px */
+
+  /* ===== Other Units ===== */
+  --border-radius: 6px;
+
+  /* ===== Main color ===== */
+  --main-color: #2563eb;
+  --main-color: rgb(37 99 235);
+  --main-color: hsl(221, 83%, 53%);
+
+  /* ===== Hues and saturation ===== */
+  --theme-color-h: 221; /* blue */
+  --theme-color-s: 30%;
+
+  /* ===== Theme core ===== */
+  --theme: hsl(221 20% 53%); /* base hue and saturation, mid lightness */
+
+  /* ===== Derived colors (dark mode default) ===== */
+  --bg-dark:     hsl(from var(--theme) h s 0%);
+  --bg:          hsl(from var(--theme) h s 5%);
+  --bg-light:    hsl(from var(--theme) h s 10%);
+  --bg-header:   hsl(from var(--theme) h 90% 10%);
+
+  --text:        hsl(from var(--theme) h s 95%);
+  --text-muted:  hsl(from var(--theme) h s 70%);
+
+  --border:      hsl(from var(--theme) h s 30%);
+  --highlight:   hsl(from var(--theme) h s 60%);
+  --border-card: solid 1px var(--border);
+
+  /* ===== Visual effects ===== */
+  --gradient:        linear-gradient(0deg, var(--bg-dark) 85%, var(--bg-light));
+  --gradient-hover:  linear-gradient(0deg, var(--bg-dark),     var(--bg-light));
+
+  --shadow-soft:
+      0 2px 2px hsl(from var(--theme) h s 100% / 0.03),
+      0 4px 4px hsl(from var(--theme) h s 100% / 0.07);
+  --shadow:
+      0 2px 2px hsl(from var(--theme) h s 100% / 0.07),
+      0 4px 4px hsl(from var(--theme) h s 100% / 0.15);
+  --shadow-hard:
+      0 2px 2px hsl(from var(--theme) h s 100% / 0.15),
+      0 4px 4px hsl(from var(--theme) h s 100% / 0.3);
+
+  /* ===== Light mode overrides ===== */
+  @media (prefers-color-scheme: light) {
+    & {
+      --bg-dark:     hsl(from var(--theme) h s 90%);
+      --bg:          hsl(from var(--theme) h s 95%);
+      --bg-light:    hsl(from var(--theme) h s 100%);
+      --bg-header:   hsl(from var(--theme) h 90% 90%);
+
+      --text:        hsl(from var(--theme) h s 25%);
+      --text-muted:  hsl(from var(--theme) h s 50%);
+
+      --border:      hsl(from var(--theme) h s 30%);
+      --highlight:   hsl(from var(--theme) h s 100%);
+      --border-card: solid 1px var(--bg);
+
+      --gradient:        linear-gradient(0deg, var(--bg-dark) 15%, var(--bg-light));
+      --gradient-hover:  linear-gradient(0deg, var(--bg-dark),     var(--bg-light));
+
+      --shadow-soft:
+          0 2px 2px hsl(from var(--theme) h s 0% / 0.03),
+          0 4px 4px hsl(from var(--theme) h s 0% / 0.07);
+      --shadow:
+          0 2px 2px hsl(from var(--theme) h s 0% / 0.07),
+          0 4px 4px hsl(from var(--theme) h s 0% / 0.15);
+      --shadow-hard:
+          0 2px 2px hsl(from var(--theme) h s 0% / 0.15),
+          0 4px 4px hsl(from var(--theme) h s 0% / 0.3);
+    }
+  }
+
+  /* ===== Forced light theme ===== */
+  &[data-theme='theme-light'] {
+    --bg-dark:     hsl(from var(--theme) h s 90%);
+    --bg:          hsl(from var(--theme) h s 95%);
+    --bg-light:    hsl(from var(--theme) h s 100%);
+    --bg-header:   hsl(from var(--theme) h 90% 90%);
+
+    --text:        hsl(from var(--theme) h s 25%);
+    --text-muted:  hsl(from var(--theme) h s 50%);
+
+    --border:      hsl(from var(--theme) h s 30%);
+    --highlight:   hsl(from var(--theme) h s 100%);
+    --border-card: solid 1px var(--bg);
+
+    --gradient:        linear-gradient(0deg, var(--bg-dark) 15%, var(--bg-light));
+    --gradient-hover:  linear-gradient(0deg, var(--bg-dark),     var(--bg-light));
+
+    --shadow-soft:
+        0 2px 2px hsl(from var(--theme) h s 0% / 0.03),
+        0 4px 4px hsl(from var(--theme) h s 0% / 0.07);
+    --shadow:
+        0 2px 2px hsl(from var(--theme) h s 0% / 0.07),
+        0 4px 4px hsl(from var(--theme) h s 0% / 0.15);
+    --shadow-hard:
+        0 2px 2px hsl(from var(--theme) h s 0% / 0.15),
+        0 4px 4px hsl(from var(--theme) h s 0% / 0.3);
+  }
+
+  /* ===== Forced dark theme ===== */
+  &[data-theme='theme-dark'] {
+    --bg-dark:     hsl(from var(--theme) h s 0%);
+    --bg:          hsl(from var(--theme) h s 5%);
+    --bg-light:    hsl(from var(--theme) h s 10%);
+    --bg-header:   hsl(from var(--theme) h 90% 10%);
+
+    --text:        hsl(from var(--theme) h s 95%);
+    --text-muted:  hsl(from var(--theme) h s 70%);
+
+    --border:      hsl(from var(--theme) h s 30%);
+    --highlight:   hsl(from var(--theme) h s 60%);
+    --border-card: solid 1px var(--border);
+
+    /* ===== Visual effects ===== */
+    --gradient:        linear-gradient(0deg, var(--bg-dark) 85%, var(--bg-light));
+    --gradient-hover:  linear-gradient(0deg, var(--bg-dark),     var(--bg-light));
+
+    --shadow-soft:
+        0 2px 2px hsl(from var(--theme) h s 100% / 0.03),
+        0 4px 4px hsl(from var(--theme) h s 100% / 0.07);
+    --shadow:
+        0 2px 2px hsl(from var(--theme) h s 100% / 0.07),
+        0 4px 4px hsl(from var(--theme) h s 100% / 0.15);
+    --shadow-hard:
+        0 2px 2px hsl(from var(--theme) h s 100% / 0.15),
+        0 4px 4px hsl(from var(--theme) h s 100% / 0.3);
+  }
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+html {
+  color-scheme: light dark;
+  height: 100%;
+  overflow: hidden;
+}
+
+[data-theme='theme-light'] {
+  color-scheme: light;
+}
+[data-theme='theme-dark'] {
+  color-scheme: dark;
+}
+
+body {
+  margin: 0;
+  font-family: system-ui, 'Segoe UI', Roboto, Arial, sans-serif;
+  background-color: var(--bg-dark);
+  color: var(--text);
+}
