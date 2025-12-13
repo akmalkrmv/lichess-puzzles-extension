@@ -1,25 +1,49 @@
 // Helper functions to generate random test data
 
-function generateRaceId() {
+function generateRandomId() {
   return Math.random().toString(36).substring(2, 7);
 }
 
+function generateRandomNumber(min, max) {
+  return Math.floor(Math.random() * max) + min;
+}
+
 function generateRaceStats() {
-  const totalPlayers = Math.floor(Math.random() * 9) + 2; // 2-10 players
-  const rank = Math.floor(Math.random() * (totalPlayers - 1)) + 1; // 1 to totalPlayers-1
-  const score = Math.floor(Math.random() * 121); // 0-120
+  const totalPlayers = generateRandomNumber(2, 9); // 2-10 players
+  const rank = generateRandomNumber(1, totalPlayers - 1); // 1 to totalPlayers-1
+  const score = generateRandomNumber(0, 121); // 0-120
   return {score, rank, totalPlayers};
+}
+
+function generateStormStats() {
+  const score = generateRandomNumber(0, 1000); // Assuming score ranges from 0 to 1000
+  const moves = generateRandomNumber(60, 73);
+  const accuracy = generateRandomNumber(85, 89);
+  const combo = generateRandomNumber(17, 25);
+  const time = generateRandomNumber(115, 142);
+  const timePerMove = generateRandomNumber(1.72, 2.05);
+  const highestSolved = generateRandomNumber(1457, 1558);
+
+  return {
+    score,
+    moves,
+    accuracy,
+    combo,
+    time,
+    timePerMove,
+    highestSolved,
+  };
 }
 
 function generatePuzzleLinks(count) {
   const puzzles = [];
   for (let i = 0; i < count; i++) {
-    puzzles.push(generateRaceId());
+    puzzles.push(generateRandomId());
   }
   return puzzles;
 }
 
-function generateTestData() {
+function generateTestData(generateStats) {
   const data = {};
   const now = Date.now();
   const hour = 1000 * 60 * 60;
@@ -43,21 +67,22 @@ function generateTestData() {
   ];
 
   timeOffsets.forEach((offset) => {
-    const raceId = generateRaceId();
+    const randomId = generateRandomId();
     const solvedCount = Math.floor(Math.random() * 20) + 5;
     const unsolvedCount = Math.floor(Math.random() * 10);
     const reviewedCount = Math.floor(Math.random() * 5);
 
-    data[raceId] = {
+    data[randomId] = {
       reviewed: generatePuzzleLinks(reviewedCount),
       solved: generatePuzzleLinks(solvedCount),
       unsolved: generatePuzzleLinks(unsolvedCount),
       timestamp: now + offset,
-      ...generateRaceStats(),
+      ...generateStats(),
     };
   });
 
   return data;
 }
 
-const testData = generateTestData();
+const testRaceData = generateTestData(generateRaceStats);
+const testStormData = generateTestData(generateStormStats);

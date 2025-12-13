@@ -12,3 +12,5 @@ tsconfig.tsbuildinfo
 # Log files
 *.log
 
+# Local development
+example-data/
