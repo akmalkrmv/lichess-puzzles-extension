@@ -10,10 +10,16 @@ const StorageAdapter = (() => {
 
   function initializeTestData() {
     // Only initialize test data if chrome.storage is not available
-    if (!isAvailable() && localStorage.getItem('races') === null && typeof testData !== 'undefined') {
-      // Wrap testData in the 'races' key since that's how it's stored
-      localStorage.setItem('races', JSON.stringify(testData));
-      localStorage.setItem('openRaces', JSON.stringify({}));
+    if (!isAvailable()) {
+      if (localStorage.getItem('races') === null && typeof testRaceData !== 'undefined') {
+        localStorage.setItem('races', JSON.stringify(testRaceData));
+        localStorage.setItem('openRaces', JSON.stringify({}));
+      }
+
+      if (localStorage.getItem('storms') === null && typeof testStormData !== 'undefined') {
+        localStorage.setItem('storms', JSON.stringify(testStormData));
+        localStorage.setItem('openStorms', JSON.stringify({}));
+      }
     }
   }
 

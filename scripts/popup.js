@@ -57,11 +57,19 @@ async function renderCurrentTab() {
     case 'history':
       await updateUI();
       break;
+    case 'storms':
+      await updateStormUI();
+      break;
     case 'export':
       await ExportManager.renderExport();
       break;
     case 'import':
       await ImportManager.renderImport();
+      break;
+    case 'stats':
+      const data = await StorageAdapter.get(['races']);
+      const races = data.races || {};
+      await StatsManager.renderStats(races);
       break;
     case 'settings':
       await SettingsManager.renderSettings();
@@ -75,6 +83,14 @@ async function updateUI() {
 
   const data = await StorageAdapter.get(['races', 'openRaces']);
   UIRenderer.render(data);
+}
+
+async function updateStormUI() {
+  // Only update history tab if it's active
+  if (TabManager.getCurrentTab() !== 'storms') return;
+
+  const data = await StorageAdapter.get(['storms', 'openRaces']);
+  UIRenderer.renderStorm(data);
 }
 
 initializeApp();

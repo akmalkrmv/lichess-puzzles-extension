@@ -6,8 +6,10 @@ const TabManager = (() => {
   let currentTab = 'history';
   const tabs = {
     history: 'History',
+    storms: 'Storms',
     export: 'Export',
     import: 'Import',
+    stats: 'Statistics',
     settings: 'Settings',
   };
 

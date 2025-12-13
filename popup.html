@@ -4,8 +4,12 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
+    <!-- font-awesome icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet" />
+
     <link rel="stylesheet" href="styles/resets.css" />
     <link rel="stylesheet" href="styles/styles.css" />
+    <link rel="stylesheet" href="styles/stats.css" />
   </head>
   <body>
     <div class="popup-container">
@@ -14,16 +18,22 @@
       </header>
 
       <nav class="tabs-nav">
-        <button class="tab-btn" data-tab="history">📋 History</button>
-        <button class="tab-btn" data-tab="export">📥 Export</button>
-        <button class="tab-btn" data-tab="import">📤 Import</button>
-        <button class="tab-btn" data-tab="settings">⚙️ Settings</button>
+        <button class="tab-btn" data-tab="history"><i class="fa-solid fa-flag-checkered"></i> Races</button>
+        <button class="tab-btn" data-tab="storms"><i class="fa-solid fa-table-list"></i> Storms</button>
+        <button class="tab-btn" data-tab="export"><i class="fa-solid fa-clipboard-list"></i> Export</button>
+        <button class="tab-btn" data-tab="stats"><i class="fa-solid fa-chart-area"></i> Statistics</button>
+        <button class="tab-btn" data-tab="settings"><i class="fa-solid fa-gear"></i> Settings</button>
       </nav>
 
       <main class="tabs-content">
         <!-- History Tab -->
         <section id="history-content" data-tab-content="history">
           <div id="list"></div>
+        </section>
+
+        <!-- Storms Tab -->
+        <section id="storms-content" data-tab-content="storms">
+          <div id="storm-list"></div>
         </section>
 
         <!-- Export Tab -->
@@ -33,6 +43,11 @@
 
         <!-- Import Tab -->
         <section id="import-content" data-tab-content="import">
+          <div class="loading">Loading...</div>
+        </section>
+
+        <!-- Import Tab -->
+        <section id="stats-content" data-tab-content="stats">
           <div class="loading">Loading...</div>
         </section>
 
@@ -71,6 +86,7 @@
     <script src="scripts/modules/settings-manager.js"></script>
     <script src="scripts/modules/export-manager.js"></script>
     <script src="scripts/modules/import-manager.js"></script>
+    <script src="scripts/modules/stats-manager.js"></script>
 
     <!-- Main popup controller -->
     <script src="scripts/popup.js"></script>
