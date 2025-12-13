@@ -17,4 +17,4 @@ export const SELECTORS = {
     unsolvedRounds: '.puz-history__round:has(bad) a',
     stats: '.slist td number',
   },
-};
+} as const;

@@ -1,5 +1,7 @@
-import {RuntimeMessage, PuzzleRaceFinishedMessage, PuzzleStormFinishedMessage, PuzzleSolvedMessage, DebugMessage} from './messages';
-import {IRace, Race, Storm} from './models';
+import {RuntimeMessage, PuzzleRaceFinishedMessage, PuzzleStormFinishedMessage, PuzzleSolvedMessage, DebugMessage, GetRaceRunsMessage, GetStormRunsMessage} from './messages';
+import {IRace, IStorm} from './models';
+
+type SendResponseType = (response?: unknown) => void;
 
 (function () {
   // Experimenting with extension panels
@@ -11,33 +13,42 @@ import {IRace, Race, Storm} from './models';
   // });
   // chrome.tabs.onActivated.addListener(async ({tabId}) => {
   //   const {path} = await chrome.sidePanel.getOptions({tabId});
-  //   // if (path === stormPage) {
-  //   //   chrome.sidePanel.setOptions({path: racerPage});
-  //   // }
+  //   if (path === stormPage) {
+  //     chrome.sidePanel.setOptions({path: racerPage});
+  //   }
   // });
 
   chrome.runtime.onInstalled.addListener(() => {
     replacePuzzleFullPathsWithOnlyPuzzleIds();
   });
 
-  chrome.runtime.onMessage.addListener((message: RuntimeMessage, sender: chrome.runtime.MessageSender, _sendResponse: (response?: unknown) => void) => {
+  chrome.runtime.onMessage.addListener((message: RuntimeMessage, sender: chrome.runtime.MessageSender, _sendResponse: SendResponseType) => {
     switch (message.type) {
+      // Race
+      case 'get_race_runs':
+        getRaceRuns(message as GetRaceRunsMessage, _sendResponse);
+        break;
       case 'puzzle_race_finished':
         saveRaceInformation(message as PuzzleRaceFinishedMessage);
         break;
 
+      // Storm
+      case 'get_storm_runs':
+        getStormRuns(message as GetStormRunsMessage, _sendResponse);
+        break;
       case 'puzzle_storm_finished':
         saveStormInformation(message as PuzzleStormFinishedMessage);
         break;
 
+      // Training
       case 'puzzle_solved_single':
         updatePuzzleStateToReviewed(message as PuzzleSolvedMessage);
         break;
 
+      // Other
       case 'debug_script':
         debug_script(message as DebugMessage);
         break;
-
       case 'close_tab':
         closeTab(sender);
         break;
@@ -46,6 +57,13 @@ import {IRace, Race, Storm} from './models';
         break;
     }
   });
+
+  function getRaceRuns(message: GetRaceRunsMessage, _sendResponse: SendResponseType) {
+    chrome.storage.local.get(['races'], (data) => {
+      const races: Record<string, IRace> = (data.races as Record<string, IRace>) || {};
+      _sendResponse(races);
+    });
+  }
 
   function saveRaceInformation(message: PuzzleRaceFinishedMessage) {
     chrome.storage.local.get(['races'], (data) => {
@@ -68,9 +86,16 @@ import {IRace, Race, Storm} from './models';
     });
   }
 
+  function getStormRuns(message: GetStormRunsMessage, _sendResponse: SendResponseType) {
+    chrome.storage.local.get(['storms'], (data) => {
+      const storms: Record<string, IStorm> = (data.races as Record<string, IStorm>) || {};
+      _sendResponse(storms);
+    });
+  }
+
   function saveStormInformation(message: PuzzleStormFinishedMessage) {
     chrome.storage.local.get(['storms'], (data) => {
-      const storms: Record<string, Storm> = (data.storms as Record<string, Storm>) || {};
+      const storms: Record<string, IStorm> = (data.storms as Record<string, IStorm>) || {};
 
       storms[message.stormId] = {
         stormId: message.stormId,
@@ -97,7 +122,7 @@ import {IRace, Race, Storm} from './models';
     const puzzleId = message.id;
 
     chrome.storage.local.get(['races'], (data) => {
-      const races: Record<string, Race> = (data.races as Record<string, Race>) || {};
+      const races: Record<string, IRace> = (data.races as Record<string, IRace>) || {};
 
       for (const raceId in races) {
         const race = races[raceId];
@@ -133,8 +158,9 @@ import {IRace, Race, Storm} from './models';
   function replacePuzzleFullPathsWithOnlyPuzzleIds() {
     const extractLastSegment = (href: string) => href.split('/').pop()!;
 
-    chrome.storage.local.get(['races'], (data) => {
+    chrome.storage.local.get(['races', 'storms'], (data) => {
       const races: Record<string, IRace> = (data.races as Record<string, IRace>) || {};
+      const storms: Record<string, IStorm> = (data.storms as Record<string, IStorm>) || {};
 
       for (const raceId in races) {
         const race: IRace = races[raceId];
@@ -146,7 +172,17 @@ import {IRace, Race, Storm} from './models';
         };
       }
 
-      chrome.storage.local.set({races});
+      for (const stormId in storms) {
+        const storm: IStorm = storms[stormId];
+        storms[stormId] = {
+          ...storm,
+          solved: storm.solved.map(extractLastSegment),
+          unsolved: storm.unsolved.map(extractLastSegment),
+          reviewed: storm.reviewed.map(extractLastSegment),
+        };
+      }
+
+      chrome.storage.local.set({races, storms, debug_content: storms.length});
     });
   }
 })();

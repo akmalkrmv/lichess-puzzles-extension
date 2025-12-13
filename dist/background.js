@@ -8,24 +8,34 @@
     // });
     // chrome.tabs.onActivated.addListener(async ({tabId}) => {
     //   const {path} = await chrome.sidePanel.getOptions({tabId});
-    //   // if (path === stormPage) {
-    //   //   chrome.sidePanel.setOptions({path: racerPage});
-    //   // }
+    //   if (path === stormPage) {
+    //     chrome.sidePanel.setOptions({path: racerPage});
+    //   }
     // });
     chrome.runtime.onInstalled.addListener(() => {
         replacePuzzleFullPathsWithOnlyPuzzleIds();
     });
     chrome.runtime.onMessage.addListener((message, sender, _sendResponse) => {
         switch (message.type) {
+            // Race
+            case 'get_race_runs':
+                getRaceRuns(message, _sendResponse);
+                break;
             case 'puzzle_race_finished':
                 saveRaceInformation(message);
+                break;
+            // Storm
+            case 'get_storm_runs':
+                getStormRuns(message, _sendResponse);
                 break;
             case 'puzzle_storm_finished':
                 saveStormInformation(message);
                 break;
+            // Training
             case 'puzzle_solved_single':
                 updatePuzzleStateToReviewed(message);
                 break;
+            // Other
             case 'debug_script':
                 debug_script(message);
                 break;
@@ -36,6 +46,12 @@
                 break;
         }
     });
+    function getRaceRuns(message, _sendResponse) {
+        chrome.storage.local.get(['races'], (data) => {
+            const races = data.races || {};
+            _sendResponse(races);
+        });
+    }
     function saveRaceInformation(message) {
         chrome.storage.local.get(['races'], (data) => {
             const races = data.races || {};
@@ -52,6 +68,12 @@
                 totalPlayers: message.totalPlayers || 0,
             };
             chrome.storage.local.set({ races });
+        });
+    }
+    function getStormRuns(message, _sendResponse) {
+        chrome.storage.local.get(['storms'], (data) => {
+            const storms = data.races || {};
+            _sendResponse(storms);
         });
     }
     function saveStormInformation(message) {
@@ -105,8 +127,9 @@
     }
     function replacePuzzleFullPathsWithOnlyPuzzleIds() {
         const extractLastSegment = (href) => href.split('/').pop();
-        chrome.storage.local.get(['races'], (data) => {
+        chrome.storage.local.get(['races', 'storms'], (data) => {
             const races = data.races || {};
+            const storms = data.storms || {};
             for (const raceId in races) {
                 const race = races[raceId];
                 races[raceId] = {
@@ -116,7 +139,16 @@
                     reviewed: race.reviewed.map(extractLastSegment),
                 };
             }
-            chrome.storage.local.set({ races });
+            for (const stormId in storms) {
+                const storm = storms[stormId];
+                storms[stormId] = {
+                    ...storm,
+                    solved: storm.solved.map(extractLastSegment),
+                    unsolved: storm.unsolved.map(extractLastSegment),
+                    reviewed: storm.reviewed.map(extractLastSegment),
+                };
+            }
+            chrome.storage.local.set({ races, storms, debug_content: storms.length });
         });
     }
 })();

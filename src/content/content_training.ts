@@ -1,8 +1,9 @@
 // Example href link of single puzzle
 // https://lichess.org/training/Iy8iI
 
-import {Race, PuzzleId} from './models';
-import {PUZZLE_FEEDBACK_SUCCESS_SELECTOR, PUZZLE_FEEDBACK_NEXT_SELECTOR} from './UI/selectors';
+import {MessageTypes} from '../messages';
+import {Race, PuzzleId} from '../models';
+import {PUZZLE_FEEDBACK_SUCCESS_SELECTOR, PUZZLE_FEEDBACK_NEXT_SELECTOR} from '../UI/selectors';
 
 type RacesRecord = Record<string, Race>;
 type PuzzleLink = string | undefined;
@@ -80,7 +81,7 @@ type PuzzleLink = string | undefined;
     const isPuzzleSolved = document.querySelector(PUZZLE_FEEDBACK_SUCCESS_SELECTOR);
     if (!isPuzzleSolved) return;
 
-    chrome.runtime.sendMessage({type: 'puzzle_solved_single', id: puzzleId});
+    chrome.runtime.sendMessage({type: MessageTypes.puzzle_solved_single, id: puzzleId});
 
     // Optional: auto-close puzzle tab after solving
     // chrome.runtime.sendMessage({ type: "close_tab" });
