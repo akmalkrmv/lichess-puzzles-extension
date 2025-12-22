@@ -74,7 +74,7 @@ const UIRenderer = (() => {
 
       groupRaceIds.forEach((id) => {
         const storm = storms[id];
-        raceContainer.appendChild(RaceDetailRenderer.createRaceElement(id, storm, openRaces, settings));
+        raceContainer.appendChild(StormDetailRenderer.createStormElement(id, storm, openRaces, settings));
       });
 
       fragment.appendChild(raceContainer);

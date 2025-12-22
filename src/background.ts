@@ -121,14 +121,15 @@ type SendResponseType = (response?: unknown) => void;
   function updatePuzzleStateToReviewed(message: PuzzleSolvedMessage) {
     const puzzleId = message.id;
 
-    chrome.storage.local.get(['races'], (data) => {
+    chrome.storage.local.get(['races', 'storms'], (data) => {
       const races: Record<string, IRace> = (data.races as Record<string, IRace>) || {};
+      const storms: Record<string, IStorm> = (data.storms as Record<string, IStorm>) || {};
 
       for (const raceId in races) {
         const race = races[raceId];
 
         // Look for the puzzle
-        const puzzleIndex = race.unsolved.findIndex((url) => url.endsWith('/' + puzzleId));
+        const puzzleIndex = race.unsolved.findIndex((url) => url.endsWith('/' + puzzleId) || url === puzzleId);
 
         if (puzzleIndex !== -1) {
           const puzzleUrl = race.unsolved[puzzleIndex];
@@ -137,6 +138,24 @@ type SendResponseType = (response?: unknown) => void;
           race.reviewed.push(puzzleUrl); // add to reviewed
 
           chrome.storage.local.set({races});
+
+          return; // IMPORTANT — prevents overwriting
+        }
+      }
+
+      for (const stormId in storms) {
+        const storm = storms[stormId];
+
+        // Look for the puzzle
+        const puzzleIndex = storm.unsolved.findIndex((url) => url.endsWith('/' + puzzleId) || url === puzzleId);
+
+        if (puzzleIndex !== -1) {
+          const puzzleUrl = storm.unsolved[puzzleIndex];
+
+          storm.unsolved.splice(puzzleIndex, 1); // remove from unsolved
+          storm.reviewed.push(puzzleUrl); // add to reviewed
+
+          chrome.storage.local.set({storms});
 
           return; // IMPORTANT — prevents overwriting
         }

@@ -19,7 +19,7 @@ import {MessageTypes} from '../messages';
 
   function collectPuzzles() {
     const score: number = Number(getText(SELECTORS.score) ?? 0);
-    const rankString: string | undefined = getText(SELECTORS.score);
+    const rankString: string | undefined = getText(SELECTORS.rank);
 
     const solved: string[] = getLinks(SELECTORS.solvedRounds).map(extractLastSegment);
     const unsolved: string[] = getLinks(SELECTORS.unsolvedRounds).map(extractLastSegment);

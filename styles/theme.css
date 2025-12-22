@@ -1,0 +1,261 @@
+:root {
+  --unsolved-color: hsl(6, 53%, 46%);
+  --reviewed-color: hsl(290, 53%, 52%);
+  --solved-color: hsl(145, 53%, 42%);
+  --orange-color: hsl(32, 53%, 52%);
+  --neutral-color: #333;
+
+  --primary-color: var(--solved-color);
+  --secondary-color: var(--reviewed-color);
+  --accent-color: var(--unsolved-color);
+  --warn-color: var(--orange-color);
+
+  --color-opac-b-1: rgba(0, 0, 0, 0.05);
+  --color-opac-b-2: rgba(0, 0, 0, 0.08);
+  --color-opac-b-3: rgba(0, 0, 0, 0.13);
+  --color-opac-b-4: rgba(0, 0, 0, 0.16);
+  --color-opac-b-5: rgba(0, 0, 0, 0.22);
+  --color-opac-b-6: rgba(0, 0, 0, 0.28);
+  --color-opac-b-7: rgba(0, 0, 0, 0.4);
+  --color-opac-b-8: rgba(0, 0, 0, 0.5);
+  --color-opac-b-9: rgba(0, 0, 0, 0.6);
+  --color-opac-b-10: rgba(0, 0, 0, 0.7);
+  --color-opac-b-11: rgba(0, 0, 0, 0.75);
+  --color-opac-b-12: rgba(0, 0, 0, 0.8);
+  --color-opac-b-13: rgba(0, 0, 0, 0.85);
+  --color-opac-b-14: rgba(0, 0, 0, 0.9);
+  --color-opac-b-15: rgba(0, 0, 0, 0.95);
+
+  --shadow-elevation-1: 0 1px 2px var(--color-opac-b-14),
+    0 0px 2px var(--color-opac-b-14);
+  --shadow-elevation-2: 0 4px 8px var(--color-opac-b-7),
+    0 0px 4px var(--color-opac-b-7);
+  --shadow-elevation-3: 0 6px 16px var(--color-opac-b-8),
+    0 0px 4px var(--color-opac-b-7);
+  --shadow-elevation-4: 0 12px 32px var(--color-opac-b-8),
+    0 0px 8px var(--color-opac-b-7);
+  --shadow-elevation-5: 0 32px 64px var(--color-opac-b-9),
+    0 0px 16px var(--color-opac-b-7);
+}
+
+body {
+  overflow: auto;
+  width: auto;
+  max-width: 800px;
+}
+
+header,
+main,
+footer {
+  margin: auto var(--space-lg);
+}
+
+main section {
+  margin-block-end: var(--space-lg);
+
+  & > hr {
+    border-color: transparent;
+    margin-block-end: var(--space-md);
+  }
+}
+
+hr {
+  border-color: var(--bg-light);
+  margin-block-end: var(--space-lg);
+}
+
+/* ==== BUTTONS ==== */
+
+.btn {
+  padding: var(--space-sm) var(--space-md);
+  margin-block-end: var(--space-sm);
+
+  color: var(--text);
+  background-color: var(--bg-light);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 500;
+
+  transition-duration: 0.2s;
+  transition-property: color, background-color, border-color;
+
+  &:hover {
+    color: var(--text);
+    border-color: var(--highlight);
+    background-color: var(--highlight);
+    opacity: 0.9;
+  }
+
+  &.btn-sm {
+    padding: var(--space-xs) var(--space-sm);
+    font-size: 0.9rem;
+  }
+
+  &.btn-primary {
+    color: var(--text);
+    border-color: var(--highlight);
+    background-color: var(--highlight);
+  }
+
+  &.btn-danger {
+    color: white;
+    border-color: var(--unsolved-color);
+    background-color: var(--unsolved-color);
+  }
+
+  &.active {
+    color: var(--text);
+    border-color: var(--highlight);
+    background-color: var(--highlight);
+  }
+
+  &[primary] {
+    background-color: hsl(from var(--primary-color) h s l / 0.8);
+  }
+  &[secondary] {
+    background-color: hsl(from var(--secondary-color) h s l / 0.8);
+  }
+  &[accent] {
+    background-color: hsl(from var(--accent-color) h s l / 0.8);
+  }
+  &[warn] {
+    background-color: hsl(from var(--warn-color) h s l / 0.8);
+  }
+}
+
+/* ==== BADGES ==== */
+
+.badge {
+  display: inline-block;
+  text-align: center;
+
+  min-width: 1.5rem;
+
+  padding-block: var(--space-xs);
+  padding-inline: var(--space-sm);
+
+  border-radius: 4px;
+
+  font-weight: bold;
+  font-size: 0.9rem;
+
+  color: var(--text);
+  background-color: hsl(from var(--neutral-color) h s l / 0.8);
+
+  &[primary] {
+    background-color: hsl(from var(--primary-color) h s l / 0.8);
+  }
+  &[secondary] {
+    background-color: hsl(from var(--secondary-color) h s l / 0.8);
+  }
+  &[accent] {
+    background-color: hsl(from var(--accent-color) h s l / 0.8);
+  }
+  &[warn] {
+    background-color: hsl(from var(--warn-color) h s l / 0.8);
+  }
+
+  &.unsolved-badge {
+    background-color: hsl(from var(--unsolved-color) h s l / 0.8);
+  }
+  &.reviewed-badge {
+    background-color: hsl(from var(--reviewed-color) h s l / 0.8);
+  }
+  &.solved-badge {
+    background-color: hsl(from var(--solved-color) h s l / 0.8);
+  }
+
+  &.current-badge {
+    color: var(--text-muted);
+    border: 1px solid var(--border);
+    background-color: var(--bg-light);
+  }
+}
+
+/* ==== Inputs ==== */
+input {
+  padding: var(--space-sm) var(--space-md);
+  margin-block-end: var(--space-sm);
+
+  /* &[primary] {
+    border-color: hsl(from var(--primary-color) h s l / 0.8);
+  }
+  &[secondary] {
+    border-color: hsl(from var(--secondary-color) h s l / 0.8);
+  }
+  &[accent] {
+    border-color: hsl(from var(--accent-color) h s l / 0.8);
+  }
+  &[warn] {
+    border-color: hsl(from var(--warn-color) h s l / 0.8);
+  } */
+}
+
+/* ==== Cards ==== */
+.card {
+  margin-block: var(--space-md);
+  padding-inline: var(--space-md);
+  padding-block: var(--space-md);
+
+  color: var(--text);
+  background-color: var(--bg-light);
+  border-radius: var(--border-radius);
+  border: var(--border-card);
+
+  & .card-header {
+    margin-block-end: var(--space-sm);
+    font-size: larger;
+    color: var(--text);
+  }
+
+  & .card-content {
+    font-size: smaller;
+    color: var(--text-muted);
+  }
+
+  &.shadow-soft {
+    box-shadow: var(--shadow-soft);
+  }
+  &.shadow {
+    box-shadow: var(--shadow);
+  }
+  &.shadow-hard {
+    box-shadow: var(--shadow-hard);
+  }
+
+  /* &.shadow-soft {
+    box-shadow: var(--shadow-elevation-2);
+  }
+  &.shadow {
+    box-shadow: var(--shadow-elevation-3);
+  }
+  &.shadow-hard {
+    box-shadow: var(--shadow-elevation-4);
+  } */
+
+  &[solved] {
+    border: var(--border-card);
+    border-color: var(--solved-color);
+    border-color: hsl(from var(--solved-color) h s l / 0.7);
+  }
+
+  &[unsolved] {
+    border: var(--border-card);
+    border-color: var(--unsolved-color);
+    border-color: hsl(from var(--unsolved-color) h s l / 0.7);
+  }
+
+  &[reviewed] {
+    border: var(--border-card);
+    border-color: var(--reviewed-color);
+    border-color: hsl(from var(--reviewed-color) h s l / 0.7);
+  }
+}
+
+body {
+}
+
+/* ==== Alerts ==== */

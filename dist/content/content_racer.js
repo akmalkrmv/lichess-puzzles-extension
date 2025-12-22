@@ -42,7 +42,7 @@
     const extractLastSegment = (href) => href.split("/").pop();
     function collectPuzzles() {
       const score = Number(getText(SELECTORS.score) ?? 0);
-      const rankString = getText(SELECTORS.score);
+      const rankString = getText(SELECTORS.rank);
       const solved = getLinks(SELECTORS.solvedRounds).map(extractLastSegment);
       const unsolved = getLinks(SELECTORS.unsolvedRounds).map(extractLastSegment);
       const reviewed = [];

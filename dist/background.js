@@ -100,17 +100,30 @@
     }
     function updatePuzzleStateToReviewed(message) {
         const puzzleId = message.id;
-        chrome.storage.local.get(['races'], (data) => {
+        chrome.storage.local.get(['races', 'storms'], (data) => {
             const races = data.races || {};
+            const storms = data.storms || {};
             for (const raceId in races) {
                 const race = races[raceId];
                 // Look for the puzzle
-                const puzzleIndex = race.unsolved.findIndex((url) => url.endsWith('/' + puzzleId));
+                const puzzleIndex = race.unsolved.findIndex((url) => url.endsWith('/' + puzzleId) || url === puzzleId);
                 if (puzzleIndex !== -1) {
                     const puzzleUrl = race.unsolved[puzzleIndex];
                     race.unsolved.splice(puzzleIndex, 1); // remove from unsolved
                     race.reviewed.push(puzzleUrl); // add to reviewed
                     chrome.storage.local.set({ races });
+                    return; // IMPORTANT — prevents overwriting
+                }
+            }
+            for (const stormId in storms) {
+                const storm = storms[stormId];
+                // Look for the puzzle
+                const puzzleIndex = storm.unsolved.findIndex((url) => url.endsWith('/' + puzzleId) || url === puzzleId);
+                if (puzzleIndex !== -1) {
+                    const puzzleUrl = storm.unsolved[puzzleIndex];
+                    storm.unsolved.splice(puzzleIndex, 1); // remove from unsolved
+                    storm.reviewed.push(puzzleUrl); // add to reviewed
+                    chrome.storage.local.set({ storms });
                     return; // IMPORTANT — prevents overwriting
                 }
             }

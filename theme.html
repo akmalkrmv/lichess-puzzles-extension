@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- font-awesome icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet" />
+
+    <link rel="stylesheet" href="styles/resets.css" />
+    <link rel="stylesheet" href="styles/styles.css" />
+    <link rel="stylesheet" href="styles/theme.css" />
+
+    <title>Theme - Puzzle Racer Tracker</title>
+  </head>
+  <body>
+    <header>
+      <h1>Puzzle Racer Tracker - Theme visualization</h1>
+    </header>
+
+    <main>
+      <aside></aside>
+
+      <!-- Buttons -->
+      <section>
+        <button class="btn">Neutral</button>
+        <button class="btn" primary>Primary</button>
+        <button class="btn" secondary>Secondary</button>
+        <button class="btn" accent>Accent</button>
+        <button class="btn" success>Success</button>
+        <button class="btn" error>Error</button>
+        <button class="btn" warning>Warning</button>
+        <button class="btn" info>Info</button>
+        <hr />
+        <button class="btn">Neutral</button>
+        <button class="btn btn-primary">Primary</button>
+        <button class="btn" secondary>Secondary</button>
+        <button class="btn" accent>Accent</button>
+        <button class="btn" success>Success</button>
+        <button class="btn btn-danger" error>Error</button>
+        <button class="btn" warning>Warning</button>
+        <button class="btn" info>Info</button>
+        <hr />
+        <button class="btn btn-sm">Neutral</button>
+        <button class="btn btn-sm btn-primary">Primary</button>
+        <button class="btn btn-sm" secondary>Secondary</button>
+        <button class="btn btn-sm" accent>Accent</button>
+        <button class="btn btn-sm" success>Success</button>
+        <button class="btn btn-sm btn-danger" error>Error</button>
+        <button class="btn btn-sm" warning>Warning</button>
+        <button class="btn btn-sm" info>Info</button>
+      </section>
+      <hr />
+
+      <!-- Badges -->
+      <section>
+        <span class="badge">Neutral</span>
+        <span class="badge" primary>Primary</span>
+        <span class="badge" secondary>Secondary</span>
+        <span class="badge" accent>Accent</span>
+        <span class="badge" success>Success</span>
+        <span class="badge" error>Error</span>
+        <span class="badge" warning>Warning</span>
+        <span class="badge" info>Info</span>
+        <hr />
+        <span class="badge solved-badge">Solved</span>
+        <span class="badge reviewed-badge">Reviewed</span>
+        <span class="badge unsolved-badge">Unsolved</span>
+        <span class="badge current-badge">Current</span>
+      </section>
+      <hr />
+
+      <!-- Icons -->
+      <!-- <section></section> -->
+      <!-- <hr /> -->
+
+      <!-- Inputs -->
+      <section>
+        <input placeholder="Neutral" />
+        <input primary placeholder="Primary" />
+        <input secondary placeholder="Secondary" />
+        <input accent placeholder="Accent" />
+        <input success placeholder="Success" />
+        <input error placeholder="Error" />
+        <input warning placeholder="Warning" />
+        <input info placeholder="Info" />
+        <hr />
+        <textarea></textarea>
+        <hr />
+        <div class="checkboxes">
+          <input id="ch1" type="checkbox" />
+          <label for="ch1">checkbox 1</label>
+          <input id="ch2" type="checkbox" />
+          <label for="ch2">checkbox 2</label>
+          <input id="ch3" type="checkbox" />
+          <label for="ch3">checkbox 3</label>
+          <input id="ch4" type="checkbox" />
+          <label for="ch4">checkbox 4</label>
+        </div>
+        <hr />
+        <div class="checkboxes">
+          <input id="rd1" type="radio" name="radio" />
+          <label for="rd1">radio 1</label>
+          <input id="rd2" type="radio" name="radio" />
+          <label for="rd2">radio 2</label>
+          <input id="rd3" type="radio" name="radio" />
+          <label for="rd3">radio 3</label>
+          <input id="rd4" type="radio" name="radio" />
+          <label for="rd4">radio 4</label>
+        </div>
+      </section>
+      <hr />
+
+      <!-- Cards -->
+      <section>
+        <div class="card">
+          <div class="card-header">Basic</div>
+          <div class="card-content">Card This is a simple card with a title and content.</div>
+        </div>
+        <div class="card">
+          <div class="card-header">Card with Actions</div>
+          <div class="card-content">Card This is a simple card with a title and content.</div>
+        </div>
+        <div class="card">
+          <div class="card-header">Bordered Card</div>
+          <div class="card-content">This card has a visible border.</div>
+        </div>
+        <div class="card">
+          <div class="card-header">Compact Card</div>
+          <div class="card-content">This card uses less padding.</div>
+        </div>
+        <hr />
+        <div class="card shadow-soft">
+          <div class="card-header">Shadow Card Soft</div>
+          <div class="card-content">This card uses shadow.</div>
+        </div>
+        <div class="card shadow">
+          <div class="card-header">Shadow Card</div>
+          <div class="card-content">This card uses shadow.</div>
+        </div>
+        <div class="card shadow-hard">
+          <div class="card-header">Shadow Card Hard</div>
+          <div class="card-content">This card uses shadow.</div>
+        </div>
+        <hr />
+        <div class="card" solved>
+          <div class="card-header">Primary Color Card</div>
+          <div class="card-content">This card uses border color.</div>
+        </div>
+        <div class="card" reviewed>
+          <div class="card-header">Secondary Color Card</div>
+          <div class="card-content">This card uses border color.</div>
+        </div>
+        <div class="card" unsolved>
+          <div class="card-header">Accent Color Card Hard</div>
+          <div class="card-content">This card uses border color.</div>
+        </div>
+        <hr />
+      </section>
+      <hr />
+    </main>
+
+    <footer>No copyright at all</footer>
+
+    <div class="snackbar-container">
+      <div class="snackbar"></div>
+    </div>
+
+    <!-- Core Modules -->
+    <script src="scripts/modules/snackbar-manager.js"></script>
+  </body>
+</html>
