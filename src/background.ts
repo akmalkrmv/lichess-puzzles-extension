@@ -19,6 +19,11 @@ type SendResponseType = (response?: unknown) => void;
   // });
 
   chrome.runtime.onInstalled.addListener(() => {
+    chrome.sidePanel.setOptions({path: 'popup.html'});
+    chrome.sidePanel.setPanelBehavior({openPanelOnActionClick: true});
+  });
+
+  chrome.runtime.onInstalled.addListener(() => {
     replacePuzzleFullPathsWithOnlyPuzzleIds();
   });
 

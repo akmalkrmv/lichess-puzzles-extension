@@ -29,7 +29,7 @@ const LinkHandler = (() => {
 
     // Close the window only if the left mouse button (button == 0) is clicked
     if (e.button === 0) {
-      window.close();
+      // window.close();
     }
   }
 

@@ -109,7 +109,7 @@ const ExportManager = (() => {
         </div>
 
         <div class="export-actions">
-          ${'' /*`<button class="btn btn-primary" id="export-btn">📥 Export to File</button>`}*/}
+          ${`<button class="btn btn-primary" id="export-btn">📥 Export to File</button>`}
           <button class="btn" id="copy-btn">📋 Copy to Clipboard</button>
         </div>
 

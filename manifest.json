@@ -3,7 +3,7 @@
   "name": "Lichess Puzzle Collector",
   "description": "Automates collecting unsolved puzzles on Lichess",
   "version": "1.1.0",
-  "permissions": ["tabs", "activeTab", "storage", "sidePanel"],
+  "permissions": ["tabs", "activeTab", "storage", "sidePanel", "downloads"],
   "host_permissions": ["https://lichess.org/*"],
   "background": {
     "service_worker": "dist/background.js",

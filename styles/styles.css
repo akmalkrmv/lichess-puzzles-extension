@@ -144,10 +144,10 @@ summary::-webkit-details-marker {
   }
 }
 
-.badges .badge,
+/* .badges .badge,
 .badges-container .badge {
   margin-inline-start: var(--space-xs);
-}
+} */
 
 .links {
   margin-top: var(--space-sm);

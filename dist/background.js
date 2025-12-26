@@ -13,6 +13,10 @@
     //   }
     // });
     chrome.runtime.onInstalled.addListener(() => {
+        chrome.sidePanel.setOptions({ path: 'popup.html' });
+        chrome.sidePanel.setPanelBehavior({ openPanelOnActionClick: true });
+    });
+    chrome.runtime.onInstalled.addListener(() => {
         replacePuzzleFullPathsWithOnlyPuzzleIds();
     });
     chrome.runtime.onMessage.addListener((message, sender, _sendResponse) => {
