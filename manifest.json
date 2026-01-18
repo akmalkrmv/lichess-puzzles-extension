@@ -7,6 +7,7 @@
   "host_permissions": ["https://lichess.org/*"],
   "background": {
     "service_worker": "dist/background.js",
+    "scripts": ["dist/background.js"],
     "type": "module"
   },
   "content_scripts": [
