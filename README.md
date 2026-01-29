@@ -1,6 +1,9 @@
 # Lichess Puzzle Racer Collector
 
-A Chrome extension that automates collecting unsolved puzzles from Lichess puzzle racer.
+A Chrome extension that automates collecting unsolved puzzles from Lichess puzzle racer.  
+
+> **Note**: this extension is deprecated, please visit the new repository:  
+> **https://github.com/akmalkrmv/liracer-extension**
 
 ## Overview
 
@@ -10,12 +13,12 @@ This extension was inspired to help [ElyneLee](https://www.twitch.tv/elynelee) k
 
 ## Features
 
-- 🎯 **Automatic Puzzle Collection** - Collects unsolved puzzles from Lichess puzzle modes
-- 📋 **Organized Storage** - Maintains a structured list of collected puzzle races
-- 🔗 **Quick Navigation** - Easy access to stored puzzle links
-- 📊 **Puzzle Tracking** - Keeps track of puzzle race sessions with timestamps
-- 🎮 **Multi-Mode Support** - Works with both Puzzle Racer and Puzzle Training modes
-- 🌓 **Light & Dark Theme Support** - Automatically adapts to your system theme preference
+- **Automatic Puzzle Collection** - Collects unsolved puzzles from Lichess puzzle modes
+- **Organized Storage** - Maintains a structured list of collected puzzle races
+- **Quick Navigation** - Easy access to stored puzzle links
+- **Puzzle Tracking** - Keeps track of puzzle race sessions with timestamps
+- **Multi-Mode Support** - Works with both Puzzle Racer and Puzzle Training modes
+- **Light & Dark Theme Support** - Automatically adapts to your system theme preference
 
 ## Supported Modes
 
